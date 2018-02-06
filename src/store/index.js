@@ -3,7 +3,6 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
 import thunk from 'redux-thunk';
 import axios from 'axios';
-import chalk from 'chalk';
 
 import rootReducer from '_reducers';
 
@@ -34,7 +33,7 @@ export default (history, initialState) => {
 
         store.replaceReducer(nextReducer);
       } catch (error) {
-        console.error(chalk.red(`==> 😭  Reducer hot reloading error ${error}`));
+        console.error(`Reducer hot reloading error ${error}`);
       }
     });
   }

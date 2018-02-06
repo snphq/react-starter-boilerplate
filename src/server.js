@@ -9,7 +9,9 @@ import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter, matchPath } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { all, fork, join } from 'redux-saga/effects';
 import chalk from 'chalk';
+import _ from 'lodash/fp';
 
 import createHistory from 'history/createMemoryHistory';
 import configureStore from '_store';
@@ -70,17 +72,19 @@ app.get('*', (req, res) => {
 
   // Here's the method for loading data from server-side
   const loadBranchData = () => {
-    const promises = [];
-
-    routes.some((route) => {
+    const sagasToRun = routes.reduce((sagas, route) => {
       const match = matchPath(req.path, route);
+      if (match && route.sagasToRun) {
+        return _.concat(sagas, route.sagasToRun);
+      }
 
-      if (match && route.loadData) promises.push(route.loadData(store.dispatch, match.params));
+      return sagas;
+    }, []);
 
-      return match;
-    });
-
-    return Promise.all(promises);
+    return store.runSaga(function* () {
+      const tasks = yield all(sagasToRun.map(saga => fork(saga)));
+      yield all(tasks.map(task => join(task)));
+    }).done;
   };
 
   (async () => {
