@@ -3,14 +3,20 @@
 **1. You can start by cloning the repository on your local machine by running:**
 
 ```bash
-git clone https://github.com/wellyshen/react-cool-starter.git
-cd react-cool-starter
+git clone https://github.com/snphq/react-starter-boilerplate
+cd react-starter-boilerplate
 ```
 
 **2. Install all of the dependencies:**
 
 ```bash
 yarn
+```
+
+**3. Build app for first for producing correct webpack-assets.json:**
+
+```bash
+yarn build
 ```
 
 **3. Start to run it:**
