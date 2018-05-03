@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 
 import UserInfo from './UserInfo';
 
 const UserInfoPage = () => (
-  <div>
+  <Fragment>
     <Helmet title="User info" />
     <UserInfo />
-  </div>
+  </Fragment>
 );
 
 export default UserInfoPage;

@@ -6,3 +6,4 @@ node_modules
 public/assets
 webpack-assets.json
 webpack-stats.json
+.vscode

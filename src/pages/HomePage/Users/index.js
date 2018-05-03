@@ -1,17 +1,28 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import {
-  fetchUsers,
-} from '_actions/users';
 
 import UserList from './UsersList';
+import { usersSelector } from '_selectors';
+import { fetchUsers } from '_actions/users';
+
+@connect(
+  state => ({ users: usersSelector(state) }),
+  { onFetchUsers: fetchUsers },
+)
 
 class Users extends PureComponent {
+  static propTypes = {
+    users: PropTypes.array,
+    onFetchUsers: PropTypes.func,
+  }
+
   componentDidMount() {
-    this.props.fetchUsers();
+    const {
+      onFetchUsers,
+    } = this.props;
+
+    onFetchUsers();
   }
 
   renderUsersList = () => {
@@ -20,6 +31,7 @@ class Users extends PureComponent {
   };
 
   render() {
+    console.log('I\'m rendering');
     return (
       <div>
         {this.renderUsersList()}
@@ -28,18 +40,4 @@ class Users extends PureComponent {
   }
 }
 
-Users.propTypes = {
-  users: PropTypes.array,
-  fetchUsers: PropTypes.func,
-};
-
-const mapStateToProps = state => ({
-  users: state.users.list,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    fetchUsers,
-  }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default Users;

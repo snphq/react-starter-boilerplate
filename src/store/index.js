@@ -2,7 +2,6 @@ import { routerMiddleware } from 'react-router-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
 import thunk from 'redux-thunk';
-import axios from 'axios';
 
 import rootReducer from '_reducers';
 
@@ -10,7 +9,7 @@ export default (history, initialState) => {
   const sagaMiddleware = createSagaMiddleware();
 
   const middlewares = [
-    thunk.withExtraArgument(axios),
+    thunk,
     routerMiddleware(history),
     sagaMiddleware,
   ];

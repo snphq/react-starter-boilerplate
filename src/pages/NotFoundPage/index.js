@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 
 import NotFound from './NotFound';
 
 const NotFoundPage = () => (
-  <div>
+  <Fragment>
     <Helmet title="User info" />
     <NotFound />
-  </div>
+  </Fragment>
 );
 
 export default NotFoundPage;

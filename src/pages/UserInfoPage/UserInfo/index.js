@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 
-import {
-  fetchUserInfo,
-} from 'actions/users';
-
+import { fetchUserInfo } from 'actions/users';
 import UserCard from './UserCard';
 
 class UserInfo extends PureComponent {

@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 
 import Users from './Users';
 
 const HomePage = () => (
-  <div>
+  <Fragment>
     <Helmet title="Home" />
     <Users />
-  </div>
+  </Fragment>
 );
 
 export default HomePage;
