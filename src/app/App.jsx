@@ -7,7 +7,7 @@ import { hot } from 'react-hot-loader';
 
 import config from '../config';
 // Import your global styles here
-import 'normalize.css/normalize.css'; // eslint-disable-line import/first
+import 'normalize.css/normalize.css';
 import styles from './App.scss';
 import logo from '_images/logo.svg';
 
