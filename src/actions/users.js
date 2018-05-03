@@ -3,7 +3,7 @@ import {
   SET_USERS,
   FETCH_USER_INFO_REQUEST,
   SET_USER_INFO,
-} from './constants/users';
+} from './constants';
 
 export const fetchUsers = () => ({
   type: FETCH_USERS_REQUEST,

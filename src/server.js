@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { all, fork, join } from 'redux-saga/effects';
 import Helmet from 'react-helmet';
 import chalk from 'chalk';
+import _concat from 'lodash/concat';
 
 import createHistory from 'history/createMemoryHistory';
 import configureStore from './store';
@@ -73,19 +74,20 @@ app.get('*', (req, res) => {
 
   // Here's the method for loading data from server-side
   const loadBranchData = () => {
-    /*
     const branch = matchRoutes(routes, req.path);
-    console.log(branch);
+    const sagasToRun = branch.reduce((sagas, routeInfo) => {
+      const { route, match } = routeInfo;
+      if (route.sagasToRun) {
+        return _concat(sagas, route.sagasToRun);
+      }
 
-    const sagasToRun = branch.map(({route, match}) => {
-      if (route.sagasToRun)
-    });
+      return sagas;
+    }, []);
 
     return store.runSaga(function* runSagas() {
       const tasks = yield all(sagasToRun.map(saga => fork(saga)));
       yield all(tasks.map(task => join(task)));
     }).done;
-    */
   };
 
   (async () => {
@@ -112,7 +114,6 @@ app.get('*', (req, res) => {
         return;
       }
 
-      debugger;
       const head = Helmet.renderStatic();
       const htmlContent = renderToString(AppComponent);
       const initialState = store.getState();
@@ -146,8 +147,9 @@ if (port) {
 
     console.info(chalk.green(`==> 🌎  Listening at ${url}`));
 
-    // Open Chrome
+    /* open browser
     require('../tools/openBrowser')(url);
+    */
   });
 } else {
   console.error(chalk.red('==> 😭  OMG!!! No PORT environment variable has been specified'));

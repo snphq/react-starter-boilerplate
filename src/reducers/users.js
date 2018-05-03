@@ -3,7 +3,7 @@ import _pick from 'lodash/pick';
 import {
   SET_USERS,
   SET_USER_INFO,
-} from '_actions/constants/users';
+} from '_constants';
 
 const initialState = {
   current: null,

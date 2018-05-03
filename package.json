@@ -138,7 +138,7 @@
             "_components": "./src/components",
             "_styles": "./src/styles",
             "_images": "./src/assets/images",
-            "_selectors": "./src/selectors"            
+            "_selectors": "./src/selectors"
           }
         }
       ]
@@ -221,6 +221,7 @@
     ],
     "rules": {
       "string-quotes": "single",
+      "at-rule-no-unknown": null,
       "selector-pseudo-class-no-unknown": [
         true,
         {
@@ -275,6 +276,7 @@
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
+    "react-css-modules": "^4.7.2",
     "react-dom": "^16.3.2",
     "react-helmet": "^5.2.0",
     "react-hot-loader": "^4.1.2",
