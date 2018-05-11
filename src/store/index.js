@@ -29,7 +29,6 @@ export default (history, initialState) => {
     module.hot.accept('../reducers', () => {
       try {
         const nextReducer = require('../reducers').default;
-
         store.replaceReducer(nextReducer);
       } catch (error) {
         console.error(`Reducer hot reloading error ${error}`);

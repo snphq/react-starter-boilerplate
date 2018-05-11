@@ -22,7 +22,7 @@ import configureStore from './store';
 import renderHtml from './utils/renderHtml';
 import routes from './routes';
 import assets from '../public/webpack-assets.json';
-import { port, host } from './config';
+import { port } from './config';
 
 const app = express();
 
@@ -55,8 +55,7 @@ if (!__DEV__) {
       hot: true,
       quiet: true, // Turn it on for friendly-errors-webpack-plugin
       noInfo: true,
-      stats: 'minimal',
-      serverSideRender: true,
+      stats: 'minimal'
     }),
   );
 
@@ -140,8 +139,8 @@ app.get('*', (req, res) => {
 });
 
 if (port) {
-  app.listen(port, host, (err) => {
-    const url = `http://${host}:${port}`;
+  app.listen(port, (err) => {
+    const url = `http://localhost:${port}`;
 
     if (err) console.error(`==> 😭  OMG!!! ${err}`);
 

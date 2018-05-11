@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrate } from 'react-dom';
+import { render, hydrate, unmountComponentAtNode } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
@@ -18,8 +18,11 @@ const store = configureStore(history, initialState);
 // Start saga middleware
 store.runSaga(rootSaga);
 
-const render = (routes) => {
-  hydrate(
+const renderDom = __DEV__ ? render : hydrate;
+const mountNode = document.getElementById('react-view');
+
+const renderApp = (routes) => {
+  renderDom(
     <AppContainer>
       <Provider store={store}>
         <ConnectedRouter history={history}>
@@ -27,7 +30,7 @@ const render = (routes) => {
         </ConnectedRouter>
       </Provider>
     </AppContainer>,
-    document.getElementById('react-view'),
+    mountNode,
   );
 };
 
@@ -36,12 +39,12 @@ if (module.hot) {
   module.hot.accept('./routes', () => {
     try {
       const nextRoutes = require('./routes').default;
-
-      render(nextRoutes);
+      unmountComponentAtNode(mountNode);
+      renderApp(nextRoutes);
     } catch (error) {
       console.error(`==> 😭  Routes hot reloading error ${error}`);
     }
   });
 }
 
-render(appRoutes);
+renderApp(appRoutes);

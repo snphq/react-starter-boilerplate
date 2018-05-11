@@ -47,7 +47,7 @@ export default (
       </head>
       <body>
         <!-- Insert the router, which passed from server-side -->
-        <div id="react-view">${htmlContent}</div>
+        <div id="react-view">${__INJECT_SERVER_RENDERING__ ? htmlContent : ''}</div>
 
         <!-- Store the initial state into window -->
         <script>
