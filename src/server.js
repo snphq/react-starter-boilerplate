@@ -21,7 +21,7 @@ import createHistory from 'history/createMemoryHistory';
 import configureStore from './store';
 import renderHtml from './utils/renderHtml';
 import routes from './routes';
-import assets from '../public/webpack-assets.json';
+import assets from '../public/webpack-assets';
 import { port } from './config';
 
 const app = express();

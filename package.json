@@ -21,7 +21,6 @@
     "express",
     "webpack v3",
     "es6",
-    "flow",
     "code splitting",
     "hot reloading",
     "babel",
@@ -41,8 +40,6 @@
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
     "lint:style": "better-npm-run lint:style",
-    "flow": "better-npm-run flow",
-    "flow:stop": "better-npm-run flow:stop",
     "test": "better-npm-run test",
     "test:watch": "yarn test --watch",
     "clean:all": "yarn clean:build && yarn clean:test",
@@ -115,8 +112,7 @@
         {
           "decoratorsLegacy": true
         }
-      ],
-      "@babel/preset-flow"
+      ]
     ],
     "plugins": [
       "loadable-components/babel",
@@ -295,7 +291,6 @@
     "@babel/cli": "^7.0.0-beta.46",
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
-    "@babel/preset-flow": "^7.0.0-beta.46",
     "@babel/preset-react": "^7.0.0-beta.46",
     "@babel/preset-stage-0": "^7.0.0-beta.46",
     "asset-require-hook": "^1.2.0",
@@ -327,7 +322,6 @@
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
-    "flow-bin": "^0.71.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-minifier": "^3.5.15",
     "identity-obj-proxy": "^3.0.0",

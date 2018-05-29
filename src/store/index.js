@@ -14,7 +14,12 @@ export default (history, initialState) => {
     sagaMiddleware,
   ];
 
-  const composeEnhancers = (typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+  const composeEnhancers =
+    (__DEV__ &&
+      typeof window === 'object' &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    compose;
+
   const enhancers = composeEnhancers(
     applyMiddleware(...middlewares),
   );
