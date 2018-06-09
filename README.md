@@ -35,3 +35,26 @@ Now the app should be running at [http://localhost:8080/](http://localhost:8080/
 `lint:style`|Lint all `.scss` files.
 `clean:all`|Remove the client/server bundled stuff and the coverage report.
 `clean:build`|Remove the `./public/assets` folder to clean the client bundled files.
+
+
+## Generator
+
+1. Create page
+```bash
+yarn g p ${name}
+```
+
+2. Create container
+```bash
+yarn g con ${name}
+```
+
+3. Create component
+```bash
+yarn g com ${name}
+```
+
+4. Create page/container/component without template in jsx - add 'w' in line end
+```bash
+yarn g p/con/com ${name} w
+```
