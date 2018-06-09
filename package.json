@@ -48,7 +48,9 @@
     "clean:all": "yarn clean:build && yarn clean:test",
     "clean:build": "better-npm-run clean:build",
     "clean:test": "better-npm-run clean:test",
-    "coveralls": "better-npm-run coveralls && yarn clean:test"
+    "coveralls": "better-npm-run coveralls && yarn clean:test",
+    "generate": "node ./generator/index.js",
+    "g": "npm run generate"
   },
   "betterScripts": {
     "start": {
