@@ -7,11 +7,13 @@ import { ConnectedRouter } from 'react-router-redux';
 import { renderRoutes } from 'react-router-config';
 
 import appRoutes from './routes';
+import getIntialState from '_store/getInitialState';
 import rootSaga from '_sagas';
 import configureStore from '_store';
 
 // Get initial state from server-side rendering
-const initialState = window.__INITIAL_STATE__;
+const initialState = getIntialState();
+
 const history = createHistory();
 const store = configureStore(history, initialState);
 

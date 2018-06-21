@@ -134,6 +134,7 @@
             "_components": "./src/components",
             "_styles": "./src/styles",
             "_images": "./src/assets/images",
+            "_localization": "./src/localization",
             "_selectors": "./src/selectors"
           }
         }
@@ -200,6 +201,8 @@
           ]
         }
       ],
+      "jsx-a11y/no-static-element-interactions": "off",
+      "jsx-a11y/click-events-have-key-events": "off",
       "lodash-fp/use-fp": "off",
       "lodash-fp/consistent-name": "off",
       "react/forbid-prop-types": "off",
@@ -262,10 +265,12 @@
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
     "compression": "^1.7.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "helmet": "^3.12.0",
     "history": "^4.7.2",
     "hpp": "^0.2.2",
+    "js-cookie": "^2.2.0",
     "loadable-components": "^1.4.0",
     "lodash": "^4.17.10",
     "morgan": "^1.9.0",
