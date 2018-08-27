@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wellyshen/react-cool-starter"
+    "url": "https://github.com/snphq/react-starter-boilerplate"
   },
   "keywords": [
     "starter",
@@ -25,8 +25,6 @@
     "hot reloading",
     "babel",
     "postcss",
-    "jest",
-    "unit testing",
     "performance optimizing"
   ],
   "license": "MIT",
@@ -40,12 +38,7 @@
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
     "lint:style": "better-npm-run lint:style",
-    "test": "better-npm-run test",
-    "test:watch": "yarn test --watch",
-    "clean:all": "yarn clean:build && yarn clean:test",
-    "clean:build": "better-npm-run clean:build",
-    "clean:test": "better-npm-run clean:test",
-    "coveralls": "better-npm-run coveralls && yarn clean:test"
+    "clean:build": "better-npm-run clean:build"
   },
   "betterScripts": {
     "start": {
@@ -82,20 +75,8 @@
     "lint:style": {
       "command": "stylelint --fix \"./src/**/*.scss\""
     },
-    "test": {
-      "command": "jest --coverage",
-      "env": {
-        "NODE_ENV": "test"
-      }
-    },
     "clean:build": {
       "command": "rimraf ./public/assets"
-    },
-    "clean:test": {
-      "command": "rimraf ./coverage"
-    },
-    "coveralls": {
-      "command": "cat ./coverage/lcov.info | coveralls"
     }
   },
   "babel": {
@@ -115,7 +96,6 @@
       ]
     ],
     "plugins": [
-      "loadable-components/babel",
       "dynamic-import-node",
       "lodash",
       [
@@ -168,7 +148,6 @@
     "env": {
       "browser": true,
       "node": true,
-      "jest": true,
       "es6": true
     },
     "rules": {
@@ -232,30 +211,6 @@
       ]
     }
   },
-  "jest": {
-    "setupFiles": [
-      "raf/polyfill",
-      "<rootDir>/tools/jest/setup.js"
-    ],
-    "globals": {
-      "__DEV__": true
-    },
-    "collectCoverageFrom": [
-      "src/containers/App/App.js",
-      "src/containers/Home/Home.js",
-      "src/containers/UserInfo/UserInfo.js",
-      "src/containers/NotFound/NotFound.js",
-      "src/components/**/*.js",
-      "src/actions/**/*.js",
-      "src/reducers/**/*.js",
-      "!src/reducers/index.js",
-      "!src/**/__tests__"
-    ],
-    "moduleNameMapper": {
-      ".*\\.(css|scss|sass)$": "<rootDir>/tools/jest/styleMock.js",
-      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tools/jest/assetMock.js"
-    }
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions"
@@ -271,7 +226,6 @@
     "history": "^4.7.2",
     "hpp": "^0.2.2",
     "js-cookie": "^2.2.0",
-    "loadable-components": "^1.4.0",
     "lodash": "^4.17.10",
     "morgan": "^1.9.0",
     "normalize.css": "^8.0.0",
@@ -302,21 +256,16 @@
     "autoprefixer": "^8.4.1",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.3",
-    "babel-jest": "^23.0.0-alpha.0",
     "babel-loader": "^8.0.0-beta",
     "babel-plugin-dynamic-import-node": "^1.2.0",
-    "babel-plugin-istanbul": "^4.1.6",
     "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-remove-console": "^6.9.1",
     "better-npm-run": "^0.1.0",
     "compression-webpack-plugin": "^1.1.11",
-    "coveralls": "^3.0.0",
     "cross-spawn": "^6.0.5",
     "css-loader": "^0.28.11",
     "css-modules-require-hook": "^4.2.3",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-import-resolver-webpack": "^0.9.0",
@@ -331,9 +280,7 @@
     "html-minifier": "^3.5.15",
     "identity-obj-proxy": "^3.0.0",
     "imagemin-webpack-plugin": "^2.1.1",
-    "jest": "^23.0.0-alpha.0",
     "mini-css-extract-plugin": "^0.4.0",
-    "nock": "^9.2.5",
     "node-sass": "^4.9.0",
     "opn": "^5.3.0",
     "postcss": "^6.0.22",
