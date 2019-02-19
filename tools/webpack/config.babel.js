@@ -126,18 +126,8 @@ module.exports = {
         loader: 'babel',
         options: {
           cacheDirectory: isDev,
-          babelrc: false,
-          presets: [
-            ['@babel/preset-env', { modules: false, useBuiltIns: 'usage' }],
-            '@babel/preset-react',
-            ['@babel/preset-stage-0', { decoratorsLegacy: true }]
-          ],
-          plugins: [
-            'react-hot-loader/babel',
-            'lodash'
-          ],
-          env: { production: { plugins: ['transform-remove-console'] } }
-        }
+          cacheCompression: !isDev,
+        },
       },
       {
         test: /\.css$/,
