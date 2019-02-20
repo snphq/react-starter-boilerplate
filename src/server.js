@@ -27,14 +27,13 @@ import { port } from './config';
 
 const app = express();
 
-// Use helmet to secure Express with various HTTP headers
+/* Use helmet to secure Express with various HTTP headers */
 app.use(helmet());
-// Prevent HTTP parameter pollution.
+/* Prevent HTTP parameter pollution */
 app.use(hpp());
-// Compress all requests
+/* Compress all requests */
 app.use(compression());
 
-// Use for http request debug (show errors only)
 app.use(morgan('dev', { skip: (req, res) => res.statusCode < 400 }));
 app.use(favicon(path.resolve(process.cwd(), 'public/favicon.ico')));
 
@@ -42,7 +41,6 @@ if (!__DEV__) {
   app.use(express.static(path.resolve(process.cwd(), 'public')));
 } else {
   /* Run express as webpack dev server */
-
   const webpack = require('webpack');
   const webpackConfig = require('../tools/webpack/config.babel');
   const compiler = webpack(webpackConfig);
@@ -54,7 +52,7 @@ if (!__DEV__) {
       publicPath: webpackConfig.output.publicPath,
       headers: { 'Access-Control-Allow-Origin': '*' },
       hot: true,
-      quiet: true, // Turn it on for friendly-errors-webpack-plugin
+      quiet: true, /* Turn it on for friendly-errors-webpack-plugin */
       noInfo: true,
       stats: 'minimal'
     }),
@@ -62,12 +60,11 @@ if (!__DEV__) {
 
   app.use(
     require('webpack-hot-middleware')(compiler, {
-      log: false, // Turn it off for friendly-errors-webpack-plugin
+      log: false, /* Turn it off for friendly-errors-webpack-plugin */
     }),
   );
 }
 
-// Register server-side rendering middleware
 app.get('*', (req, res) => {
   const history = createHistory();
 
@@ -94,36 +91,23 @@ app.get('*', (req, res) => {
 
   (async () => {
     try {
-      // Load data from server-side first
       // await loadBranchData();
 
       const staticContext = {};
       const AppComponent = (
         <Provider store={store}>
-          {/* Setup React-Router server-side rendering */}
           <StaticRouter location={req.path} context={staticContext}>
             {renderRoutes(routes)}
           </StaticRouter>
         </Provider>
       );
 
-      // Check if the render result contains a redirect, if so we need to set
-      // the specific status and redirect header and end the response
-      if (staticContext.url) {
-        res.status(301).setHeader('Location', staticContext.url);
-        res.end();
-
-        return;
-      }
-
       const head = Helmet.renderStatic();
       const htmlContent = renderToString(AppComponent);
       const initialState = store.getState();
 
-      // Check page status
       const status = staticContext.status === '404' ? 404 : 200;
 
-      // Pass the route and initial state into html template
       res
         .status(status)
         .send(
@@ -145,13 +129,11 @@ if (port) {
   app.listen(port, (err) => {
     const url = `http://localhost:${port}`;
 
-    if (err) console.error(`==> 😭  OMG!!! ${err}`);
+    if (err) {
+      console.error(`==> 😭  OMG!!! ${err}`);
+    }
 
     console.info(chalk.green(`==> 🌎  Listening at ${url}`));
-
-    /* open browser
-    require('../tools/openBrowser')(url);
-    */
   });
 } else {
   console.error(chalk.red('==> 😭  OMG!!! No PORT environment variable has been specified'));
