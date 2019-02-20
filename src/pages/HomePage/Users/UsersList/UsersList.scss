@@ -2,13 +2,19 @@
 
 .root {
   color: $color-white;
-  padding-left: 20px;
+  padding: 20px 0 0 20px;
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
 
   ul {
-    padding-left: 17px;
+    padding-left: 18px;
+    list-style-type: disc;
 
     li {
-      margin-bottom: 0.5em;
+      margin-bottom: 0.7em;
     }
   }
 
