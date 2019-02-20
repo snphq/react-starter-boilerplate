@@ -71,7 +71,6 @@ export default (
     </html>
   `;
 
-  // html-minifier configuration, refer to "https://github.com/kangax/html-minifier" for more configuration
   const minifyConfig = {
     collapseWhitespace: true,
     removeComments: true,

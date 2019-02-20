@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import path from 'path';
 import morgan from 'morgan';
 import express from 'express';
@@ -18,12 +16,14 @@ import chalk from 'chalk';
 import _concat from 'lodash/concat';
 
 import createHistory from 'history/createMemoryHistory';
-import getIntialState from './store/getInitialState';
 import configureStore from './store';
 import renderHtml from './utils/renderHtml';
 import routes from './routes';
-import assets from '../public/webpack-assets';
 import { port } from './config';
+
+/* eslint-disable import/extensions */
+import assets from '../public/webpack-assets';
+/* eslint-disable import/extensions */
 
 const app = express();
 
@@ -54,7 +54,7 @@ if (!__DEV__) {
       hot: true,
       quiet: true, /* Turn it on for friendly-errors-webpack-plugin */
       noInfo: true,
-      stats: 'minimal'
+      stats: 'minimal',
     }),
   );
 
@@ -68,14 +68,13 @@ if (!__DEV__) {
 app.get('*', (req, res) => {
   const history = createHistory();
 
-  const initialState = getIntialState(req.cookies);
+  const initialState = {};
   const store = configureStore(history, initialState);
 
-  // Here's the method for loading data from server-side
   const loadBranchData = () => {
     const branch = matchRoutes(routes, req.path);
     const sagasToRun = branch.reduce((sagas, routeInfo) => {
-      const { route, match } = routeInfo;
+      const { route } = routeInfo;
       if (route.sagasToRun) {
         return _concat(sagas, route.sagasToRun);
       }
@@ -91,7 +90,7 @@ app.get('*', (req, res) => {
 
   (async () => {
     try {
-      // await loadBranchData();
+      await loadBranchData();
 
       const staticContext = {};
       const AppComponent = (
@@ -104,7 +103,6 @@ app.get('*', (req, res) => {
 
       const head = Helmet.renderStatic();
       const htmlContent = renderToString(AppComponent);
-      const initialState = store.getState();
 
       const status = staticContext.status === '404' ? 404 : 200;
 
@@ -115,7 +113,7 @@ app.get('*', (req, res) => {
             head,
             assets,
             htmlContent,
-            initialState,
+            store.getState(),
           ),
         );
     } catch (err) {

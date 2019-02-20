@@ -7,17 +7,16 @@ import { ConnectedRouter } from 'connected-react-router';
 import { renderRoutes } from 'react-router-config';
 
 import appRoutes from './routes';
-import getIntialState from '_store/getInitialState';
 import rootSaga from '_sagas';
 import configureStore from '_store';
 
-// Get initial state from server-side rendering
-const initialState = getIntialState();
+/* Get initial state from server side rendering */
+const initialState = window.__INITIAL_STATE__;
 
 const history = createHistory();
 const store = configureStore(history, initialState);
 
-// Start saga middleware
+/* Start saga middleware */
 store.runSaga(rootSaga);
 
 const renderDom = __DEV__ ? render : hydrate;
