@@ -3,7 +3,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import ManifestPlugin from 'webpack-manifest-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import ImageminPlugin from 'imagemin-webpack-plugin';
@@ -25,11 +26,11 @@ const stylelint = false;
 const getPlugins = () => {
   // Common
   const plugins = [
-    new ExtractTextPlugin({
-      filename: '[name].[chunkhash:8].css',
-      allChunks: true,
-      disable: isDev, // Disable css extracting on development
-      ignoreOrder: CSSModules,
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: isDev ? '[name].css' : '[name].[hash].css',
+      chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
     }),
     new ManifestPlugin({
       fileName: path.resolve(process.cwd(), 'public/webpack-assets.json'),
@@ -100,7 +101,10 @@ module.exports = {
     splitChunks: {
       // Auto split vendor modules in production only
       chunks: isDev ? 'async' : 'all'
-    }
+    },
+    minimizer: [
+      new OptimizeCSSAssetsPlugin({})
+    ],
   },
   output: {
     path: path.resolve(process.cwd(), 'public/assets'),
@@ -126,56 +130,51 @@ module.exports = {
         loader: 'babel',
         options: {
           cacheDirectory: isDev,
-          cacheCompression: !isDev,
         },
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style',
-          use: [
-            {
-              loader: 'css',
-              options: {
-                importLoaders: 1,
-                sourceMap: true,
-                modules: CSSModules,
-                context: path.join(process.cwd(), './src'),
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-                minimize: !isDev,
-              },
+        use: [
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css',
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
+              modules: CSSModules,
+              context: path.join(process.cwd(), './src'),
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+              minimize: !isDev,
             },
-            { loader: 'postcss', options: { sourceMap: true } },
-          ],
-        }),
+          },
+          { loader: 'postcss', options: { sourceMap: true } },
+        ],
       },
       {
         test: /\.(scss|sass)$/,
-        loader: ExtractTextPlugin.extract({
-          fallback: 'style',
-          use: [
-            {
-              loader: 'css',
-              options: {
-                importLoaders: 2,
-                sourceMap: true,
-                modules: CSSModules,
-                context: path.join(process.cwd(), './src'),
-                localIdentName: '[name]__[local]--[hash:base64:5]',
-                minimize: !isDev,
-              },
+        use: [
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css',
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
+              modules: CSSModules,
+              context: path.join(process.cwd(), './src'),
+              localIdentName: '[name]__[local]--[hash:base64:5]',
+              minimize: !isDev,
             },
-            { loader: 'postcss', options: { sourceMap: true } },
-            {
-              loader: 'sass',
-              options: {
-                outputStyle: 'expanded',
-                sourceMap: true,
-                sourceMapContents: !isDev,
-              },
+          },
+          { loader: 'postcss', options: { sourceMap: true } },
+          {
+            loader: 'sass',
+            options: {
+              outputStyle: 'expanded',
+              sourceMap: true,
+              sourceMapContents: !isDev,
             },
-          ],
-        }),
+          },
+        ],
       },
       {
         test: /\.(woff2?|ttf|eot|svg)$/,
