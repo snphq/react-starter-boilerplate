@@ -4,11 +4,12 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'connected-react-router';
-import { renderRoutes } from 'react-router-config';
 
 import appRoutes from './routes';
 import rootSaga from '_sagas';
 import configureStore from '_store';
+
+import App from './app';
 
 /* Get initial state from server side rendering */
 const initialState = window.__INITIAL_STATE__;
@@ -27,7 +28,7 @@ const renderApp = (routes) => {
     <AppContainer>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          {renderRoutes(routes)}
+          <App routes={routes} />
         </ConnectedRouter>
       </Provider>
     </AppContainer>,

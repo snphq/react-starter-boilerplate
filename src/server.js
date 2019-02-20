@@ -8,7 +8,7 @@ import favicon from 'serve-favicon';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
-import { renderRoutes, matchRoutes } from 'react-router-config';
+import { matchRoutes } from 'react-router-config';
 import { Provider } from 'react-redux';
 import { all, fork, join } from 'redux-saga/effects';
 import Helmet from 'react-helmet';
@@ -20,6 +20,8 @@ import configureStore from './store';
 import renderHtml from './utils/renderHtml';
 import routes from './routes';
 import { port } from './config';
+
+import App from './app';
 
 /* eslint-disable import/extensions */
 import assets from '../public/webpack-assets';
@@ -96,7 +98,7 @@ app.get('*', (req, res) => {
       const AppComponent = (
         <Provider store={store}>
           <StaticRouter location={req.path} context={staticContext}>
-            {renderRoutes(routes)}
+            <App routes={routes} />
           </StaticRouter>
         </Provider>
       );

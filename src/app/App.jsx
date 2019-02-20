@@ -2,17 +2,18 @@
 import React from 'react';
 import CSSModules from 'react-css-modules';
 import PropTypes from 'prop-types';
-import { renderRoutes } from 'react-router-config';
 import Helmet from 'react-helmet';
 import { hot } from 'react-hot-loader';
 
-import '_styles/normalize.scss';
-import logo from '_images/logo.svg';
-
-import styles from './App.scss';
 import config from '../config';
 
-const App = ({ route }) => (
+import AppRouter from '_components/AppRouter';
+
+import '_styles/normalize.scss';
+import logo from '_images/logo.svg';
+import styles from './App.scss';
+
+const App = ({ routes }) => (
   <div styleName="app">
     <Helmet {...config.app} />
     <div styleName="header">
@@ -20,13 +21,12 @@ const App = ({ route }) => (
       <h1>{config.app.title}</h1>
     </div>
     <hr />
-    {/* child routes won't render without this */}
-    {renderRoutes(route.routes)}
+    <AppRouter routes={routes} />
   </div>
 );
 
 App.propTypes = {
-  route: PropTypes.object,
+  routes: PropTypes.array,
 };
 
 export default hot(module)(CSSModules(App, styles));
