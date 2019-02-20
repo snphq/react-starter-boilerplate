@@ -95,7 +95,7 @@ app.get('*', (req, res) => {
   (async () => {
     try {
       // Load data from server-side first
-      await loadBranchData();
+      // await loadBranchData();
 
       const staticContext = {};
       const AppComponent = (

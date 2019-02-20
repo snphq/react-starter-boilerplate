@@ -1,9 +1,9 @@
-import { routerMiddleware } from 'react-router-redux';
+import { routerMiddleware } from 'connected-react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
 import thunk from 'redux-thunk';
 
-import rootReducer from '_reducers';
+import createRootReducer from '_reducers';
 
 export default (history, initialState) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -24,7 +24,7 @@ export default (history, initialState) => {
     applyMiddleware(...middlewares),
   );
 
-  const store = createStore(rootReducer, initialState, enhancers);
+  const store = createStore(createRootReducer(history), initialState, enhancers);
 
   store.runSaga = sagaMiddleware.run;
   store.close = () => store.dispatch(END);

@@ -14,33 +14,21 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isDev = nodeEnv === 'development';
 
-// Globale config settings
-// Disable CSSModules here
 const CSSModules = true;
-// Enable build process terminated while there's an eslint error
 const eslint = false;
-// Enable build process terminated while there's an stylelint error
 const stylelint = false;
 
-// Setup the plugins for development/prodcution
 const getPlugins = () => {
-  // Common
   const plugins = [
     new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
       filename: isDev ? '[name].css' : '[name].[hash].css',
-      chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
     }),
     new ManifestPlugin({
       fileName: path.resolve(process.cwd(), 'public/webpack-assets.json'),
       filter: file => file.isInitial
     }),
-    // Stylelint
     new StyleLintPlugin({ failOnError: stylelint }),
-    // Setup enviorment variables for client
     new webpack.EnvironmentPlugin({ NODE_ENV: JSON.stringify(nodeEnv) }),
-    // Setup global variables for client
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
@@ -50,11 +38,9 @@ const getPlugins = () => {
   ];
 
   if (isDev) {
-    // Development
     plugins.push(new webpack.HotModuleReplacementPlugin());
   } else {
     plugins.push(
-      // Production
       new webpack.HashedModuleIdsPlugin(),
       new CompressionPlugin({
         asset: '[path].gz[query]',
@@ -63,14 +49,9 @@ const getPlugins = () => {
         threshold: 10240,
         minRatio: 0.8
       }),
-      // Plugin to compress images with imagemin
-      // Check "https://github.com/Klathmon/imagemin-webpack-plugin" for more configurations
       new ImageminPlugin({
         pngquant: { quality: '95-100' }
       }),
-      // Visualize all of the webpack bundles
-      // Check "https://github.com/webpack-contrib/webpack-bundle-analyzer#options-for-plugin"
-      // for more configurations
       new BundleAnalyzerPlugin({
         analyzerMode: process.env.NODE_ENV === 'analyze' ? 'server' : 'disabled'
       })
@@ -80,15 +61,12 @@ const getPlugins = () => {
   return plugins;
 };
 
-// Setup the entry for development/production
 const getEntry = () => {
-  // Development
-  let entry = ['webpack-hot-middleware/client?reload=true', './src/client.js'];
+  if (!isDev) {
+    return ['./src/client.js'];
+  }
 
-  // Prodcution
-  if (!isDev) entry = ['./src/client.js'];
-
-  return entry;
+  return ['webpack-hot-middleware/client?reload=true', './src/client.js'];
 };
 
 // Webpack configuration
@@ -98,10 +76,6 @@ module.exports = {
   context: path.resolve(process.cwd()),
   entry: getEntry(),
   optimization: {
-    splitChunks: {
-      // Auto split vendor modules in production only
-      chunks: isDev ? 'async' : 'all'
-    },
     minimizer: [
       new OptimizeCSSAssetsPlugin({})
     ],

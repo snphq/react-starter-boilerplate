@@ -3,7 +3,7 @@ import { render, hydrate, unmountComponentAtNode } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
-import { ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'connected-react-router';
 import { renderRoutes } from 'react-router-config';
 
 import appRoutes from './routes';
