@@ -12,7 +12,7 @@ const Router = ({ routes }) => (
         key={path}
         exact={exact}
         path={path}
-        render={props => <Component {...props} key={path} />}
+        render={props => <Component {...props} />}
       />
     ))}
     <Route path="*" exact component={NotFoundPage} />
