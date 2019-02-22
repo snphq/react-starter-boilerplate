@@ -10,13 +10,12 @@ import render from './render';
 export default (app) => {
   routes.forEach(({ path }) => {
     app.get(path, (req, res) => {
-      const history = createHistory();
-      const store = configureStore(history, {});
-
-      const branch = matchRoutes(routes, req.path);
-
       (async () => {
         try {
+          const history = createHistory();
+          const store = configureStore(history, {});
+          const branch = matchRoutes(routes, req.path);
+
           await loadBranchData(store, branch);
           const html = render(store, req.path);
 

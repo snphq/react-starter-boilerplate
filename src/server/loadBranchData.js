@@ -1,6 +1,6 @@
 import { all, fork, join } from 'redux-saga/effects';
 
-export default async (store, branch) => {
+export default (store, branch) => {
   const sagasToRun = branch.reduce((sagas, { route }) => {
     if (route.sagasToRun) {
       return sagas.concat(route.sagasToRun);

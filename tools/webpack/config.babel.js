@@ -12,8 +12,9 @@ import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const nodeEnv = process.env.NODE_ENV || 'development';
-const isDev = nodeEnv === 'development';
+const injectHtml = process.env.HTML_INJECTION === 'inject';
 
+const isDev = nodeEnv === 'development';
 const CSSModules = true;
 const eslint = false;
 const stylelint = false;
@@ -32,7 +33,8 @@ const getPlugins = () => {
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
-      __DEV__: isDev
+      __DEV__: isDev,
+      __INJECT_HTML__: injectHtml,
     }),
     new FriendlyErrorsWebpackPlugin()
   ];
