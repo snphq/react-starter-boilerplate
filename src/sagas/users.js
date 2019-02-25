@@ -20,7 +20,7 @@ export function* fetchUsers() {
     const response = yield call(fetchUsersExternal);
     yield put(setUsers(response.data));
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 }
 
@@ -29,7 +29,7 @@ export function* fetchUser({ payload }) {
     const response = yield call(fetchUserExternal, payload);
     yield put(setUserInfo(response.data));
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 }
 

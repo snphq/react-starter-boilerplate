@@ -1,7 +1,10 @@
 import HomePage from '_pages/HomePage';
 import UserInfoPage from '_pages/UserInfoPage';
 
-import { fetchUsers } from '_sagas/users';
+import {
+  fetchUsers,
+  fetchUser,
+} from '_sagas/users';
 
 export default [
   {
@@ -15,5 +18,8 @@ export default [
   {
     path: '/users/:id',
     component: UserInfoPage,
+    sagasToRun: [
+      [fetchUser, ({ id }) => ({ payload: id })],
+    ],
   },
 ];

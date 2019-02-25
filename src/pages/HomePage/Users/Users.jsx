@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
+import _isEmpty from 'lodash/isEmpty';
 
 import UserList from './UsersList';
 import { usersSelector } from '_selectors';
 import { fetchUsers } from '_actions/users';
-import _isEmpty from 'lodash/isEmpty';
 
 @connect(
   state => ({ users: usersSelector(state) }),
