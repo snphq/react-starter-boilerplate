@@ -10,6 +10,7 @@ export default [
   {
     path: '/',
     exact: true,
+    cache: false,
     component: HomePage,
     sagasToRun: [
       fetchUsers,
@@ -17,6 +18,7 @@ export default [
   },
   {
     path: '/users/:id',
+    cache: false,
     component: UserInfoPage,
     sagasToRun: [
       [fetchUser, ({ id }) => ({ payload: id })],
