@@ -31,9 +31,10 @@
   "scripts": {
     "start": "better-npm-run start",
     "start:dashboard": "webpack-dashboard yarn start",
-    "start:production": "yarn build && yarn start:prod",
-    "start:prod": "better-npm-run start:prod",
-    "build": "yarn clean:build && better-npm-run build",
+    "start:production": "yarn build:production && better-npm-run start:production",
+    "start:staging": "yarn build:staging && better-npm-run start:staging",
+    "build:staging": "yarn clean:build && better-npm-run build:staging",
+    "build:production": "yarn clean:build && better-npm-run build:production",
     "analyze": "yarn clean:build && better-npm-run analyze",
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
@@ -47,22 +48,42 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
         "PORT": 3000,
-        "HTML_INJECTION": "none"
+        "HTML_INJECTION": "none",
+        "APP_ENV": "develoment"
       }
     },
-    "start:prod": {
+    "start:staging": {
       "command": "node ./index.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
+        "PORT": 8080,
         "HTML_INJECTION": "none",
-        "PORT": 8080
+        "APP_ENV": "staging"
       }
     },
-    "build": {
+    "start:production": {
+      "command": "node ./index.js",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production",
+        "PORT": 8080,
+        "HTML_INJECTION": "none",
+        "APP_ENV": "production"
+      }
+    },
+    "build:staging": {
       "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "APP_ENV": "staging"
+      }
+    },
+    "build:production": {
+      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "env": {
+        "NODE_ENV": "production",
+        "APP_ENV": "production"
       }
     },
     "analyze": {
@@ -127,14 +148,7 @@
           }
         }
       ]
-    ],
-    "env": {
-      "production": {
-        "plugins": [
-          "transform-remove-console"
-        ]
-      }
-    }
+    ]
   },
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -199,7 +213,8 @@
       "__CLIENT__": true,
       "__SERVER__": true,
       "__DEV__": true,
-      "__INJECT_HTML__": true
+      "__INJECT_HTML__": true,
+      "__APP_ENV__": true
     }
   },
   "stylelint": {
@@ -270,7 +285,6 @@
     "babel-plugin-dynamic-import-node": "^2.2.0",
     "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-module-resolver": "^3.1.1",
-    "babel-plugin-transform-remove-console": "^6.9.1",
     "better-npm-run": "^0.1.0",
     "compression-webpack-plugin": "^1.1.11",
     "cross-spawn": "^6.0.5",
