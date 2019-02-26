@@ -70,7 +70,7 @@ const getEntry = () => {
     return ['./src/client.js'];
   }
 
-  return ['webpack-hot-middleware/client?reload=true', './src/client.js'];
+  return ['webpack-hot-middleware/client', './src/client.js'];
 };
 
 // Webpack configuration

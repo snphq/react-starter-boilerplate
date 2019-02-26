@@ -58,7 +58,7 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
-        "HTML_INJECTION": "none",
+        "HTML_INJECTION": "inject",
         "APP_ENV": "staging"
       }
     },
@@ -68,7 +68,7 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
-        "HTML_INJECTION": "none",
+        "HTML_INJECTION": "inject",
         "APP_ENV": "production"
       }
     },
@@ -261,7 +261,6 @@
     "react-css-modules": "^4.7.2",
     "react-dom": "^16.8.2",
     "react-helmet": "^5.2.0",
-    "react-hot-loader": "^4.1.2",
     "react-redux": "^6.0.1",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.2.2",

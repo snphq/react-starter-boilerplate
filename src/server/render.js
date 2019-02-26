@@ -10,7 +10,7 @@ import createHistory from 'history/createMemoryHistory';
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 
-import App from '../app';
+import App from '../components/App';
 import routes from '../routes';
 import renderHtml from '../utils/renderHtml';
 import configureStore from '../store';

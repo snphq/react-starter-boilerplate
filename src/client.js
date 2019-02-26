@@ -1,15 +1,15 @@
 import React from 'react';
 import { render, hydrate, unmountComponentAtNode } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
+// import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter } from 'connected-react-router';
 
-import appRoutes from './routes';
-import rootSaga from '_sagas';
-import configureStore from '_store';
+import routes from './routes';
+import rootSaga from './sagas';
+import configureStore from './store';
 
-import App from './app';
+import './components/App';
 
 /* Get initial state from server side rendering */
 const initialState = window.__INITIAL_STATE__;
@@ -23,30 +23,22 @@ store.runSaga(rootSaga);
 const renderDom = __INJECT_HTML__ ? hydrate : render;
 const mountNode = document.getElementById('react-view');
 
-const renderApp = (routes) => {
+const renderApp = () => {
+  unmountComponentAtNode(mountNode);
+  const App = require('./components/App').default;
+
   renderDom(
-    <AppContainer>
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <App routes={routes} />
-        </ConnectedRouter>
-      </Provider>
-    </AppContainer>,
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <App routes={routes} />
+      </ConnectedRouter>
+    </Provider>,
     mountNode,
   );
 };
 
 if (module.hot) {
-  // Enable webpack hot module replacement for routes
-  module.hot.accept('./routes', () => {
-    try {
-      const nextRoutes = require('./routes').default;
-      unmountComponentAtNode(mountNode);
-      renderApp(nextRoutes);
-    } catch (error) {
-      console.error(`==> 😭  Routes hot reloading error ${error}`);
-    }
-  });
+  module.hot.accept();
 }
 
-renderApp(appRoutes);
+renderApp();
