@@ -2,7 +2,7 @@ import React from 'react';
 import { render, hydrate, unmountComponentAtNode } from 'react-dom';
 // import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
 
 import routes from './routes';
@@ -14,7 +14,7 @@ import './components/App';
 /* Get initial state from server side rendering */
 const initialState = window.__INITIAL_STATE__;
 
-const history = createHistory();
+const history = createBrowserHistory();
 const store = configureStore(history, initialState);
 
 /* Start saga middleware */

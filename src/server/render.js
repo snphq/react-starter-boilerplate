@@ -5,7 +5,7 @@ import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
 import memoryCache from 'memory-cache';
 import { matchRoutes } from 'react-router-config';
-import createHistory from 'history/createMemoryHistory';
+import { createMemoryHistory } from 'history';
 
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
@@ -24,7 +24,7 @@ export default async (route) => {
   const cache = memoryCache.get(route);
 
   if (_isNil(cache)) {
-    const history = createHistory();
+    const history = createMemoryHistory();
     const store = configureStore(history, {});
     const branch = matchRoutes(routes, route);
 
