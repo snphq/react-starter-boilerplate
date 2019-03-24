@@ -132,6 +132,7 @@
         {
           "alias": {
             "_redux": "./src/_redux",
+            "_hocs": "./src/hocs",
             "_utils": "./src/utils",
             "_api": "./src/api",
             "_config": "./src/config",
@@ -238,6 +239,7 @@
   "dependencies": {
     "@babel/register": "^7.0.0",
     "axios": "^0.18.0",
+    "bowser": "^2.1.2",
     "chalk": "^2.4.1",
     "compression": "^1.7.2",
     "connected-react-router": "^6.3.1",
