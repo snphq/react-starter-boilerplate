@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
 import thunk from 'redux-thunk';
 
-import createRootReducer from '_reducers';
+import { createRootReducer } from '_redux';
 
 export default (history, initialState) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -29,8 +29,8 @@ export default (history, initialState) => {
   store.runSaga = sagaMiddleware.run;
   store.close = () => store.dispatch(END);
 
+  /* TODO refactoring
   if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
       try {
         const nextReducer = require('../reducers').default;
@@ -40,6 +40,7 @@ export default (history, initialState) => {
       }
     });
   }
+  */
 
   return store;
 };

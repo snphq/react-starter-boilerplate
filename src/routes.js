@@ -4,7 +4,7 @@ import UserInfoPage from '_pages/UserInfoPage';
 import {
   fetchUsers,
   fetchUser,
-} from '_sagas/users';
+} from '_redux/users/sagas';
 
 export default [
   {

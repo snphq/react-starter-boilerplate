@@ -2,16 +2,16 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import _isEmpty from 'lodash/isEmpty';
 
-import { fetchUserInfo } from '_actions';
-import { currentUserSelector } from '_selectors';
+import { FETCH_USER_INFO } from '_redux/users/actions';
+import createAction from '_utils/createAction';
+import { currentUserSelector } from '_redux/users/selectors';
 
 import UserCard from './UserCard';
 
 @connect(
   state => ({ userInfo: currentUserSelector(state) }),
-  { onFetchUserInfo: fetchUserInfo },
+  { onFetchUserInfo: createAction(FETCH_USER_INFO) },
 )
 
 @withRouter
@@ -24,11 +24,8 @@ class UserInfo extends PureComponent {
   };
 
   componentDidMount() {
-    const { userInfo, onFetchUserInfo, match: { params } } = this.props;
-
-    if (_isEmpty(userInfo)) {
-      onFetchUserInfo(params.id);
-    }
+    const { onFetchUserInfo, match: { params } } = this.props;
+    onFetchUserInfo(params.id);
   }
 
   renderUserCard = () => {

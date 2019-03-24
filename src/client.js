@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
 
 import routes from './routes';
-import rootSaga from './sagas';
+import { rootSaga } from '_redux';
 import configureStore from './store';
 
 import './components/App';

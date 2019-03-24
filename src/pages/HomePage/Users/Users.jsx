@@ -3,13 +3,15 @@ import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import _isEmpty from 'lodash/isEmpty';
 
+import { FETCH_USERS } from '_redux/users/actions';
+import { usersSelector } from '_redux/users/selectors';
+
+import createAction from '_utils/createAction';
 import UserList from './UsersList';
-import { usersSelector } from '_selectors';
-import { fetchUsers } from '_actions/users';
 
 @connect(
   state => ({ users: usersSelector(state) }),
-  { onFetchUsers: fetchUsers },
+  { onFetchUsers: createAction(FETCH_USERS) },
 )
 
 class Users extends PureComponent {

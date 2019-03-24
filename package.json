@@ -47,7 +47,7 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
-        "PORT": 3000,
+        "PORT": 5000,
         "HTML_INJECTION": "none",
         "APP_ENV": "develoment"
       }
@@ -131,20 +131,16 @@
         "module-resolver",
         {
           "alias": {
-            "_constants": "./src/actions/constants",
-            "_actions": "./src/actions",
+            "_redux": "./src/_redux",
+            "_utils": "./src/utils",
             "_api": "./src/api",
-            "_sagas": "./src/sagas",
             "_config": "./src/config",
-            "_reducers": "./src/reducers",
             "_store": "./src/store",
             "_pages": "./src/pages",
             "_containers": "./src/containers",
             "_components": "./src/components",
             "_styles": "./src/styles",
-            "_images": "./src/assets/images",
-            "_localization": "./src/localization",
-            "_selectors": "./src/selectors"
+            "_images": "./src/assets/images"
           }
         }
       ]

@@ -3,14 +3,14 @@ import _pick from 'lodash/pick';
 import {
   SET_USERS,
   SET_USER_INFO,
-} from '_constants';
+} from './actions';
 
 const initialState = {
   current: null,
   list: [],
 };
 
-const users = (state = initialState, action) => {
+export default (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -40,5 +40,3 @@ const users = (state = initialState, action) => {
       return state;
   }
 };
-
-export default users;
