@@ -9,6 +9,7 @@ import StyleLintPlugin from 'stylelint-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import ImageminPlugin from 'imagemin-webpack-plugin';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
+import WebpackNotifierPlugin from 'webpack-notifier';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const nodeEnv = process.env.NODE_ENV || 'development';
@@ -42,6 +43,10 @@ const getPlugins = () => {
   ];
 
   if (isDev) {
+    plugins.push(new WebpackNotifierPlugin({
+      excludeWarnings: true,
+      title: `${process.env.PWD.split('/').pop()}`,
+    }));
     plugins.push(new webpack.HotModuleReplacementPlugin());
   } else {
     plugins.push(
