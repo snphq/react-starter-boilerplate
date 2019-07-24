@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "better-npm-run start",
+    "start": "yarn mockmanifest && better-npm-run start",
     "start:dashboard": "webpack-dashboard yarn start",
     "start:production": "yarn build:production && better-npm-run start:production",
     "start:staging": "yarn build:staging && better-npm-run start:staging",
@@ -39,7 +39,8 @@
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
     "lint:style": "better-npm-run lint:style",
-    "clean:build": "better-npm-run clean:build"
+    "clean:build": "better-npm-run clean:build",
+    "mockmanifest": "echo '{}' >./public/webpack-assets.json"
   },
   "betterScripts": {
     "start": {
@@ -323,7 +324,8 @@
     "webpack-cli": "^2.0.15",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.1",
-    "webpack-manifest-plugin": "^2.0.1"
+    "webpack-manifest-plugin": "^2.0.1",
+    "webpack-notifier": "^1.8.0"
   },
   "resolutions": {
     "webpack-sources": "^1.1.0"
