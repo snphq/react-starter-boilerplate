@@ -13,7 +13,7 @@ export default app => {
         } catch (err) {
           res.status(500).send('Internal server error');
 
-          if (__DEV__) {
+          if (process.env.APP_ENV === 'development') {
             console.error(chalk.red(`==> 😭 Internal server error: ${err}`));
           }
         }
@@ -30,7 +30,7 @@ export default app => {
       } catch (err) {
         res.status(500).send('Internal server error');
 
-        if (__DEV__) {
+        if (process.env.APP_ENV === 'development') {
           console.error(chalk.red(`==> 😭 Internal server error: ${err}`));
         }
       }

@@ -3,9 +3,10 @@
 import serialize from 'serialize-javascript';
 import { minify } from 'html-minifier';
 
+const isDev = process.env.APP_ENV === 'development';
+
 export default (head, assets, htmlContent, initialState) => {
-  // Use pre-defined assets in development. "main" is the default webpack generated name.
-  const envAssets = __DEV__ ? { js: '/assets/main.js' } : assets;
+  const envAssets = isDev ? { js: '/assets/main.js' } : assets;
 
   const html = `
     <!doctype html>
@@ -37,8 +38,7 @@ export default (head, assets, htmlContent, initialState) => {
       </head>
       <body>
         <!-- Insert the router, which passed from server-side -->
-        <div id="react-view">${__INJECT_HTML__ ? htmlContent : ''}</div>
-
+        <div id="react-view">${isDev ? '' : htmlContent}</div>
         <!-- Store the initial state into window -->
         <script>
           // Use serialize-javascript for mitigating XSS attacks. See the following security issues:
@@ -70,5 +70,5 @@ export default (head, assets, htmlContent, initialState) => {
   };
 
   // Minify html in production
-  return __DEV__ ? html : minify(html, minifyConfig);
+  return isDev ? html : minify(html, minifyConfig);
 };

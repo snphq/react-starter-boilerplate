@@ -9,8 +9,9 @@ import applyRouter from './applyRouter';
 import webpackDev from './webpack-dev';
 
 const app = express();
+const isDev = process.env.APP_ENV === 'development';
 
-if (__DEV__) {
+if (isDev) {
   applyLogger(app);
   webpackDev(app);
 }
@@ -22,11 +23,11 @@ if (port) {
   app.listen(port, err => {
     const url = `http://localhost:${port}`;
 
-    if (err && __DEV__) {
+    if (err && isDev) {
       console.error(`==> 😭  OMG!!! ${err}`);
     }
 
-    if (__DEV__) {
+    if (isDev) {
       console.info(chalk.green(`==> 🌎  Listening at ${url}`));
     }
   });

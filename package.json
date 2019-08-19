@@ -44,13 +44,13 @@
   },
   "betterScripts": {
     "start": {
-      "command": "node --inspect ./index.js",
+      "command": "node ./index.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
-        "PORT": 5000,
-        "HTML_INJECTION": "none",
-        "APP_ENV": "develoment"
+        "APP_ENV": "development",
+        "RUNTIME_ENV": "server",
+        "PORT": 5000
       }
     },
     "start:staging": {
@@ -59,8 +59,8 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
-        "HTML_INJECTION": "inject",
-        "APP_ENV": "staging"
+        "APP_ENV": "staging",
+        "RUNTIME_ENV": "server"
       }
     },
     "start:production": {
@@ -69,26 +69,28 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
-        "HTML_INJECTION": "inject",
+        "RUNTIME_ENV": "server",
         "APP_ENV": "production"
       }
     },
     "build:staging": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./webpack",
       "env": {
         "NODE_ENV": "production",
-        "APP_ENV": "staging"
+        "APP_ENV": "staging",
+        "RUNTIME_ENV": "server"
       }
     },
     "build:production": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./webpack",
       "env": {
         "NODE_ENV": "production",
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "RUNTIME_ENV": "server"
       }
     },
     "analyze": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./webpack",
       "env": {
         "NODE_ENV": "analyze"
       }
@@ -141,7 +143,8 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^4.0.0",
     "serialize-javascript": "^1.5.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "webpack-merge": "^4.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

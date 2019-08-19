@@ -1,10 +1,7 @@
-if (__APP_ENV__ === 'staging') {
-  /* including staging config */
+if (process.env.APP_ENV === 'staging') {
   module.exports = require('./staging');
-} else if (__APP_ENV__ === 'production') {
-  /* including production config */
+} else if (process.env.APP_ENV === 'production') {
   module.exports = require('./production');
 } else {
-  /* including default (development) config */
   module.exports = require('./default');
 }

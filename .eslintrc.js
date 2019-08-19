@@ -5,7 +5,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: './tools/webpack/config.babel.js',
+        config: './webpack',
       },
     },
   },
@@ -56,12 +56,5 @@ module.exports = {
     // "arrow-parens": "off",
     // "object-curly-newline": "off",
     // "generator-star-spacing": "off"
-  },
-  globals: {
-    __CLIENT__: true,
-    __SERVER__: true,
-    __DEV__: true,
-    __INJECT_HTML__: true,
-    __APP_ENV__: true,
   },
 };

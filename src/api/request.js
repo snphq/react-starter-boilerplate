@@ -6,7 +6,7 @@ const STUB_DELAY = 1000;
 const METHODS = ['GET', 'DELETE', 'HEAD', 'POST', 'PUT', 'PATCH'];
 
 const sidedRequest = opts => {
-  if (!__SERVER__) {
+  if (process.env.RUNTIME_ENV === 'client') {
     return axios({ baseURL: BASE_URL, ...opts });
   }
 

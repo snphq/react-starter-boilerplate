@@ -20,7 +20,7 @@ const store = configureStore(history, initialState);
 /* Start saga middleware */
 store.runSaga(rootSaga);
 
-const renderDom = __INJECT_HTML__ ? hydrate : render;
+const renderDom = process.env.APP_ENV === 'development' ? render : hydrate;
 const mountNode = document.getElementById('react-view');
 
 const renderApp = () => {

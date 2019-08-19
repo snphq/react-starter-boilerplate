@@ -26,19 +26,7 @@ module.exports = {
     [
       'module-resolver',
       {
-        alias: {
-          _redux: './src/_redux',
-          _hocs: './src/hocs',
-          _utils: './src/utils',
-          _api: './src/api',
-          _config: './src/config',
-          _store: './src/store',
-          _pages: './src/pages',
-          _containers: './src/containers',
-          _components: './src/components',
-          _styles: './src/styles',
-          _images: './src/assets/images',
-        },
+        alias: require('./webpack/alias'),
       },
     ],
   ],

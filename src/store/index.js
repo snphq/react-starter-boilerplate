@@ -11,7 +11,7 @@ export default (history, initialState) => {
   const middlewares = [thunk, routerMiddleware(history), sagaMiddleware];
 
   const composeEnhancers =
-    (__DEV__ &&
+    (process.env.APP_ENV === 'development' &&
       typeof window === 'object' &&
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
     compose;
