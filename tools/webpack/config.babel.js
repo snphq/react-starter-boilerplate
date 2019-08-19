@@ -3,8 +3,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import ManifestPlugin from 'webpack-manifest-plugin';
-import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
 import ImageminPlugin from 'imagemin-webpack-plugin';
@@ -28,7 +28,7 @@ const getPlugins = () => {
     }),
     new ManifestPlugin({
       fileName: path.resolve(process.cwd(), 'public/webpack-assets.json'),
-      filter: file => file.isInitial
+      filter: file => file.isInitial,
     }),
     new StyleLintPlugin({ failOnError: stylelint }),
     new webpack.EnvironmentPlugin({ NODE_ENV: JSON.stringify(nodeEnv) }),
@@ -39,7 +39,7 @@ const getPlugins = () => {
       __INJECT_HTML__: injectHtml,
       __APP_ENV__: JSON.stringify(appEnv),
     }),
-    new FriendlyErrorsWebpackPlugin()
+    new FriendlyErrorsWebpackPlugin(),
   ];
 
   if (isDev) {
@@ -56,13 +56,14 @@ const getPlugins = () => {
         algorithm: 'gzip',
         test: /\.jsx?$|\.css$|\.(scss|sass)$|\.html$/,
         threshold: 10240,
-        minRatio: 0.8
+        minRatio: 0.8,
       }),
       new ImageminPlugin({
-        pngquant: { quality: '95-100' }
+        pngquant: { quality: '95-100' },
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: process.env.NODE_ENV === 'analyze' ? 'server' : 'disabled'
+        analyzerMode:
+          process.env.NODE_ENV === 'analyze' ? 'server' : 'disabled',
       })
     );
   }
@@ -85,9 +86,7 @@ module.exports = {
   context: path.resolve(process.cwd()),
   entry: getEntry(),
   optimization: {
-    minimizer: [
-      new OptimizeCSSAssetsPlugin({})
-    ],
+    minimizer: [new OptimizeCSSAssetsPlugin({})],
   },
   output: {
     path: path.resolve(process.cwd(), 'public/assets'),
@@ -95,7 +94,7 @@ module.exports = {
     // Don't use chunkhash in development it will increase compilation time
     filename: isDev ? '[name].js' : '[name].[chunkhash:8].js',
     chunkFilename: isDev ? '[name].chunk.js' : '[name].[chunkhash:8].chunk.js',
-    pathinfo: isDev
+    pathinfo: isDev,
   },
   module: {
     rules: [
@@ -105,7 +104,7 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'eslint',
-        options: { failOnError: eslint }
+        options: { failOnError: eslint },
       },
       {
         test: /\.jsx?$/,
@@ -162,21 +161,21 @@ module.exports = {
       {
         test: /\.(woff2?|ttf|eot|svg)$/,
         loader: 'url',
-        options: { limit: 10240, name: '[name].[hash:8].[ext]' }
+        options: { limit: 10240, name: '[name].[hash:8].[ext]' },
       },
       {
         test: /\.(gif|png|jpe?g|webp)$/,
         // Any image below or equal to 10K will be converted to inline base64 instead
         loader: 'url',
-        options: { limit: 10240, name: '[name].[hash:8].[ext]' }
-      }
-    ]
+        options: { limit: 10240, name: '[name].[hash:8].[ext]' },
+      },
+    ],
   },
   plugins: getPlugins(),
   /* Advanced configuration */
   resolveLoader: {
     // Use loaders without the -loader suffix
-    moduleExtensions: ['-loader']
+    moduleExtensions: ['-loader'],
   },
   resolve: {
     modules: ['src', 'node_modules'],
@@ -194,16 +193,16 @@ module.exports = {
       _styles: path.resolve(process.cwd(), 'src/styles'),
       _images: path.resolve(process.cwd(), 'src/assets/images'),
     },
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json'],
   },
   cache: isDev,
   stats: {
-    entrypoints: false
+    entrypoints: false,
   },
   node: {
     fs: 'empty',
     vm: 'empty',
     net: 'empty',
-    tls: 'empty'
-  }
+    tls: 'empty',
+  },
 };

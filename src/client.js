@@ -33,7 +33,7 @@ const renderApp = () => {
         <App routes={routes} />
       </ConnectedRouter>
     </Provider>,
-    mountNode,
+    mountNode
   );
 };
 

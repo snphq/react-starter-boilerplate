@@ -11,11 +11,7 @@ const UsersList = ({ list }) => (
     <ul>
       {list.map(user => (
         <li key={user.id}>
-          <Link
-            to={`/users/${user.id}`}
-          >
-            {user.name}
-          </Link>
+          <Link to={`/users/${user.id}`}>{user.name}</Link>
         </li>
       ))}
     </ul>
@@ -23,15 +19,16 @@ const UsersList = ({ list }) => (
 );
 
 UsersList.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-  })),
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })
+  ),
 };
 
 UsersList.defaultProps = {
   list: [],
 };
-
 
 export default CSSModules(UsersList, styles);

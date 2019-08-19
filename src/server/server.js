@@ -19,7 +19,7 @@ applyMiddlewares(app);
 applyRouter(app);
 
 if (port) {
-  app.listen(port, (err) => {
+  app.listen(port, err => {
     const url = `http://localhost:${port}`;
 
     if (err && __DEV__) {
@@ -31,5 +31,7 @@ if (port) {
     }
   });
 } else {
-  console.error(chalk.red('==> 😭  OMG!!! No PORT environment variable has been specified'));
+  console.error(
+    chalk.red('==> 😭  OMG!!! No PORT environment variable has been specified')
+  );
 }

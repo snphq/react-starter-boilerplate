@@ -10,15 +10,14 @@ import usersReducer from './users/reducers';
 import usersSagas from './users/sagas';
 /* sagas */
 
-export const createRootReducer = history => combineReducers({
-  router: connectRouter(history),
-  users: usersReducer,
-});
+export const createRootReducer = history =>
+  combineReducers({
+    router: connectRouter(history),
+    users: usersReducer,
+  });
 
 export const rootSaga = function* rootSaga() {
-  yield all([
-    usersSagas(),
-  ]);
+  yield all([usersSagas()]);
 };
 
 export const rootSelector = state => state;

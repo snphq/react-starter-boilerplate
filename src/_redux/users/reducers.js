@@ -1,9 +1,6 @@
 import _pick from 'lodash/pick';
 
-import {
-  SET_USERS,
-  SET_USER_INFO,
-} from './actions';
+import { SET_USERS, SET_USER_INFO } from './actions';
 
 const initialState = {
   current: null,
@@ -21,12 +18,7 @@ export default (state = initialState, action) => {
       };
 
     case SET_USER_INFO: {
-      const userInfo = _pick(payload, [
-        'name',
-        'website',
-        'phone',
-        'email',
-      ]);
+      const userInfo = _pick(payload, ['name', 'website', 'phone', 'email']);
 
       return {
         ...state,

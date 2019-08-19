@@ -5,7 +5,7 @@ const BASE_URL = '/api';
 const STUB_DELAY = 1000;
 const METHODS = ['GET', 'DELETE', 'HEAD', 'POST', 'PUT', 'PATCH'];
 
-const sidedRequest = (opts) => {
+const sidedRequest = opts => {
   if (!__SERVER__) {
     return axios({ baseURL: BASE_URL, ...opts });
   }
@@ -16,17 +16,17 @@ const sidedRequest = (opts) => {
 export const externalRequest = (externalUrl, opts) =>
   axios({ url: externalUrl, ...opts });
 
-const stubRequest = (opts) => {
+const stubRequest = opts => {
   const { stubData, stubDelay = STUB_DELAY } = opts;
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve({ data: stubData });
     }, stubDelay);
   });
 };
 
-const doRequest = (opts) => {
+const doRequest = opts => {
   if (opts.stubData) {
     return stubRequest(opts);
   }

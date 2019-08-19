@@ -11,11 +11,9 @@ import UserCard from './UserCard';
 
 @connect(
   state => ({ userInfo: currentUserSelector(state) }),
-  { onFetchUserInfo: createAction(FETCH_USER_INFO) },
+  { onFetchUserInfo: createAction(FETCH_USER_INFO) }
 )
-
 @withRouter
-
 class UserInfo extends PureComponent {
   static propTypes = {
     userInfo: PropTypes.object,
@@ -24,21 +22,20 @@ class UserInfo extends PureComponent {
   };
 
   componentDidMount() {
-    const { onFetchUserInfo, match: { params } } = this.props;
+    const {
+      onFetchUserInfo,
+      match: { params },
+    } = this.props;
     onFetchUserInfo(params.id);
   }
 
   renderUserCard = () => {
     const { userInfo } = this.props;
     return <UserCard {...userInfo} />;
-  }
+  };
 
   render() {
-    return (
-      <Fragment>
-        {this.renderUserCard()}
-      </Fragment>
-    );
+    return <Fragment>{this.renderUserCard()}</Fragment>;
   }
 }
 

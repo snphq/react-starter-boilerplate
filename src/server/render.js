@@ -20,7 +20,7 @@ import loadBranchData from './loadBranchData';
 import assets from '../../public/webpack-assets';
 /* eslint-disable import/extensions */
 
-export default async (route) => {
+export default async route => {
   const cache = memoryCache.get(route);
 
   if (_isNil(cache)) {
@@ -42,12 +42,7 @@ export default async (route) => {
     const htmlContent = renderToString(AppComponent);
     const state = store.getState();
 
-    const html = renderHtml(
-      head,
-      assets,
-      htmlContent,
-      state,
-    );
+    const html = renderHtml(head, assets, htmlContent, state);
 
     if (!_isEmpty(branch) && branch[0].route.cache) {
       cache.put(route, html);

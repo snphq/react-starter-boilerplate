@@ -4,13 +4,8 @@ import CSSModules from 'react-css-modules';
 
 import styles from './UserCard.scss';
 
-const UserCard = (props) => {
-  const {
-    name,
-    phone,
-    email,
-    website,
-  } = props;
+const UserCard = props => {
+  const { name, phone, email, website } = props;
 
   return (
     <div styleName="root">

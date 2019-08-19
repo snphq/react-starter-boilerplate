@@ -8,11 +8,7 @@ import { createRootReducer } from '_redux';
 export default (history, initialState) => {
   const sagaMiddleware = createSagaMiddleware();
 
-  const middlewares = [
-    thunk,
-    routerMiddleware(history),
-    sagaMiddleware,
-  ];
+  const middlewares = [thunk, routerMiddleware(history), sagaMiddleware];
 
   const composeEnhancers =
     (__DEV__ &&
@@ -20,11 +16,13 @@ export default (history, initialState) => {
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
     compose;
 
-  const enhancers = composeEnhancers(
-    applyMiddleware(...middlewares),
-  );
+  const enhancers = composeEnhancers(applyMiddleware(...middlewares));
 
-  const store = createStore(createRootReducer(history), initialState, enhancers);
+  const store = createStore(
+    createRootReducer(history),
+    initialState,
+    enhancers
+  );
 
   store.runSaga = sagaMiddleware.run;
   store.close = () => store.dispatch(END);

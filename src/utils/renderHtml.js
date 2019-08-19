@@ -3,16 +3,9 @@
 import serialize from 'serialize-javascript';
 import { minify } from 'html-minifier';
 
-export default (
-  head,
-  assets,
-  htmlContent,
-  initialState,
-) => {
+export default (head, assets, htmlContent, initialState) => {
   // Use pre-defined assets in development. "main" is the default webpack generated name.
-  const envAssets = __DEV__
-    ? { js: '/assets/main.js' }
-    : assets;
+  const envAssets = __DEV__ ? { js: '/assets/main.js' } : assets;
 
   const html = `
     <!doctype html>
@@ -34,13 +27,10 @@ export default (
 
         <!-- Insert bundled styles into <link> tag -->
         ${Object.keys(envAssets)
-          .map(
-            key =>
-              key.substr(key.length - 3) === 'css'
-                ? `<link href="${
-                    envAssets[key]
-                  }" media="screen, projection" rel="stylesheet" type="text/css">`
-                : ''
+          .map(key =>
+            key.substr(key.length - 3) === 'css'
+              ? `<link href="${envAssets[key]}" media="screen, projection" rel="stylesheet" type="text/css">`
+              : ''
           )
           .join('')}
 
@@ -58,11 +48,10 @@ export default (
 
         <!-- Insert bundled scripts into <script> tag -->
         ${Object.keys(envAssets)
-          .map(
-            key =>
-              key.substr(key.length - 2) === 'js'
-                ? `<script src="${envAssets[key]}"></script>`
-                : ''
+          .map(key =>
+            key.substr(key.length - 2) === 'js'
+              ? `<script src="${envAssets[key]}"></script>`
+              : ''
           )
           .join('')}
 
@@ -77,7 +66,7 @@ export default (
     trimCustomFragments: true,
     minifyCSS: true,
     minifyJS: true,
-    minifyURLs: true
+    minifyURLs: true,
   };
 
   // Minify html in production
