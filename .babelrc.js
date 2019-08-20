@@ -10,7 +10,6 @@ module.exports = {
   ],
   plugins: [
     'dynamic-import-node',
-    'lodash',
     [
       '@babel/plugin-proposal-decorators',
       {
