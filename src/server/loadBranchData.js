@@ -21,8 +21,10 @@ export default (store, branch) => {
     []
   );
 
-  return store.runSaga(function* runSagas() {
-    const tasks = yield all(sagas.map(saga => fork(saga)));
-    yield all(tasks.map(task => join(task)));
-  }).done;
+  return store
+    .runSaga(function* runSagas() {
+      const tasks = yield all(sagas.map(saga => fork(saga)));
+      yield all(tasks.map(task => join(task)));
+    })
+    .toPromise();
 };
