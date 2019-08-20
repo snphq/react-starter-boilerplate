@@ -9,7 +9,6 @@ module.exports = {
     '@babel/preset-react',
   ],
   plugins: [
-    'dynamic-import-node',
     [
       '@babel/plugin-proposal-decorators',
       {
