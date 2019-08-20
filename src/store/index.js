@@ -1,14 +1,13 @@
 import { routerMiddleware } from 'connected-react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
-import thunk from 'redux-thunk';
 
 import { createRootReducer } from '_redux';
 
 export default (history, initialState) => {
   const sagaMiddleware = createSagaMiddleware();
 
-  const middlewares = [thunk, routerMiddleware(history), sagaMiddleware];
+  const middlewares = [routerMiddleware(history), sagaMiddleware];
 
   const composeEnhancers =
     (process.env.APP_ENV === 'development' &&
