@@ -1,7 +1,7 @@
 module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier/react', 'plugin:prettier/recommended'],
-  plugins: ['react', 'prettier', 'react-hooks'],
+  plugins: ['react', 'prettier'],
   settings: {
     'import/resolver': {
       webpack: {
