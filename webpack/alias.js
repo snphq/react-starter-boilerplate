@@ -12,4 +12,5 @@ module.exports = {
   _components: path.resolve(process.cwd(), 'src/components'),
   _styles: path.resolve(process.cwd(), 'src/styles'),
   _images: path.resolve(process.cwd(), 'src/assets/images'),
+  _hooks: path.resolve(process.cwd(), 'src/hooks'),
 };
