@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import CSSModules from 'react-css-modules';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import config from '_config';
 import browserHOC from '_hocs/browser';
