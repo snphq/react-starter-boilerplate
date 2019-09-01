@@ -4,6 +4,7 @@ import { render, hydrate, unmountComponentAtNode } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
+import { HelmetProvider } from 'react-helmet-async';
 
 import routes from './routes';
 import { rootSaga } from '_redux';
@@ -30,7 +31,9 @@ const renderApp = () => {
   renderDom(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App routes={routes} />
+        <HelmetProvider>
+          <App routes={routes} />
+        </HelmetProvider>
       </ConnectedRouter>
     </Provider>,
     mountNode
