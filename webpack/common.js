@@ -32,7 +32,9 @@ module.exports = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
       APP_ENV: JSON.stringify(process.env.APP_ENV || 'development'),
-      RUNTIME_ENV: 'client',
+    }),
+    new webpack.DefinePlugin({
+      RUNTIME_ENV: JSON.stringify('client'),
     }),
   ],
   resolveLoader: {

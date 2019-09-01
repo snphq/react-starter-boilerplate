@@ -57,4 +57,7 @@ module.exports = {
     // "object-curly-newline": "off",
     // "generator-star-spacing": "off"
   },
+  globals: {
+    RUNTIME_ENV: true,
+  },
 };
