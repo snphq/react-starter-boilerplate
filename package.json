@@ -110,6 +110,7 @@
     "last 2 versions"
   ],
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.0",
     "@babel/register": "^7.0.0",
     "axios": "^0.18.0",
     "bowser": "^2.1.2",
