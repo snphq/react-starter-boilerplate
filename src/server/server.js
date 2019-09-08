@@ -1,7 +1,7 @@
 import express from 'express';
 import chalk from 'chalk';
 
-import { port } from '../config';
+import config from '../config';
 
 import applyLogger from './applyLogger';
 import applyMiddlewares from './applyMiddlewares';
@@ -19,9 +19,9 @@ if (isDev) {
 applyMiddlewares(app);
 applyRouter(app);
 
-if (port) {
-  app.listen(port, err => {
-    const url = `http://localhost:${port}`;
+if (config.port) {
+  app.listen(config.port, err => {
+    const url = `http://localhost:${config.port}`;
 
     if (err && isDev) {
       console.error(`==> 😭  OMG!!! ${err}`);
