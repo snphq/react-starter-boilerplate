@@ -1,14 +1,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import CSSModules from 'react-css-modules';
 
 import styles from './NotFound.scss';
 
 const NotFound = () => (
-  <div styleName="root">
+  <div className={styles.root}>
     <Helmet title="Oops" />
     <p>Oops, Page was not found!</p>
   </div>
 );
 
-export default CSSModules(NotFound, styles);
+export default NotFound;

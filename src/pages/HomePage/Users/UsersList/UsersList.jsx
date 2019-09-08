@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
 import { Link } from 'react-router-dom';
 
 import styles from './UsersList.scss';
 
 const UsersList = ({ list }) => (
-  <div styleName="root">
+  <div className={styles.root}>
     <h3>Users List</h3>
     <ul>
       {list.map(user => (
@@ -31,4 +30,4 @@ UsersList.defaultProps = {
   list: [],
 };
 
-export default CSSModules(UsersList, styles);
+export default UsersList;
