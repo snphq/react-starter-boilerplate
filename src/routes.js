@@ -1,7 +1,7 @@
-import HomePage from '_pages/HomePage';
-import UserInfoPage from '_pages/UserInfoPage';
+import HomePage from 'pages/HomePage';
+import UserInfoPage from 'pages/UserInfoPage';
 
-import { fetchUsers, fetchUser } from '_redux/users/sagas';
+import { fetchUsers, fetchUser } from 'models/users/sagas';
 
 export default [
   {

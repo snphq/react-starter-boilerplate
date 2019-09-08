@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FETCH_USER_INFO } from '_redux/users/actions';
-import createAction from '_utils/createAction';
-import { currentUserSelector } from '_redux/users/selectors';
+import { FETCH_USER_INFO } from 'models/users/actions';
+import createAction from 'utils/createAction';
+import { currentUserSelector } from 'models/users/selectors';
 
 import UserCard from './UserCard';
 

@@ -3,10 +3,10 @@ import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import _isEmpty from 'lodash/isEmpty';
 
-import { FETCH_USERS } from '_redux/users/actions';
-import { usersSelector } from '_redux/users/selectors';
+import { FETCH_USERS } from 'models/users/actions';
+import { usersSelector } from 'models/users/selectors';
 
-import createAction from '_utils/createAction';
+import createAction from 'utils/createAction';
 import UserList from './UsersList';
 
 @connect(

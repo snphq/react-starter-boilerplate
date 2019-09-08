@@ -7,7 +7,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import { HelmetProvider } from 'react-helmet-async';
 
 import routes from './routes';
-import { rootSaga } from '_redux';
+import { rootSaga } from 'models';
 import configureStore from './store';
 
 import './components/App';

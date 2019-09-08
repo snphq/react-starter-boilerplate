@@ -2,7 +2,7 @@ import { routerMiddleware } from 'connected-react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
 
-import { createRootReducer } from '_redux';
+import { createRootReducer } from 'models';
 
 export default (history, initialState) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -25,19 +25,6 @@ export default (history, initialState) => {
 
   store.runSaga = sagaMiddleware.run;
   store.close = () => store.dispatch(END);
-
-  /* TODO refactoring
-  if (module.hot) {
-    module.hot.accept('../reducers', () => {
-      try {
-        const nextReducer = require('../reducers').default;
-        store.replaceReducer(nextReducer);
-      } catch (error) {
-        console.error(`Reducer hot reloading error ${error}`);
-      }
-    });
-  }
-  */
 
   return store;
 };

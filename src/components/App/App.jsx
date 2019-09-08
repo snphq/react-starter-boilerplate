@@ -4,12 +4,12 @@ import CSSModules from 'react-css-modules';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet-async';
 
-import config from '_config';
-import browserHOC from '_hocs/browser';
+import config from 'config';
+import browserHOC from 'hocs/browser';
 
-import AppRouter from '_components/AppRouter';
-import '_styles/normalize.scss';
-import logo from '_images/logo.svg';
+import AppRouter from 'components/AppRouter';
+import 'styles/normalize.scss';
+import logo from 'images/logo.svg';
 import styles from './App.scss';
 
 const App = ({ routes }) => (

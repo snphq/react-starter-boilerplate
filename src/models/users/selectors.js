@@ -1,4 +1,4 @@
-import { rootSelector } from '_redux';
+import { rootSelector } from 'models';
 import { createSelector } from 'reselect';
 
 export const usersSelector = createSelector(

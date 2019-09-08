@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '_config';
+import config from 'config';
 
 const BASE_URL = '/api';
 const STUB_DELAY = 1000;

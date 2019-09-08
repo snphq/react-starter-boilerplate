@@ -1,8 +1,8 @@
 import { takeLatest, all, put, call } from 'redux-saga/effects';
 
-import createAction from '_utils/createAction';
+import createAction from 'utils/createAction';
 
-import { fetchUsersExternal, fetchUserExternal } from '_api';
+import { fetchUsersExternal, fetchUserExternal } from 'api';
 
 import {
   SET_USERS,
