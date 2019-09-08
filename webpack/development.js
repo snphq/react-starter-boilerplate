@@ -8,7 +8,7 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'cheap-module-source-map',
   entry: [
-    'webpack-hot-middleware/client',
+    'webpack-hot-middleware/client?overlay=false',
     path.resolve(process.cwd(), 'src/client'),
   ],
   cache: true,
