@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Helmet from 'react-helmet';
+import { HelmetProvider } from 'react-helmet-async';
 import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
 import memoryCache from 'memory-cache';
@@ -9,6 +9,7 @@ import { createMemoryHistory } from 'history';
 
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
+import _omit from 'lodash/omit';
 
 import App from '../components/App';
 import routes from '../routes';
@@ -20,7 +21,7 @@ import loadBranchData from './loadBranchData';
 import assets from '../../public/webpack-assets';
 /* eslint-disable import/extensions */
 
-export default async (route) => {
+export default async route => {
   const cache = memoryCache.get(route);
 
   if (_isNil(cache)) {
@@ -30,23 +31,27 @@ export default async (route) => {
 
     await loadBranchData(store, branch);
 
+    const helmetContext = {};
+
     const AppComponent = (
       <Provider store={store}>
         <StaticRouter location={route} context={{}}>
-          <App routes={routes} />
+          <HelmetProvider context={helmetContext}>
+            <App routes={routes} />
+          </HelmetProvider>
         </StaticRouter>
       </Provider>
     );
 
-    const head = Helmet.renderStatic();
     const htmlContent = renderToString(AppComponent);
     const state = store.getState();
 
     const html = renderHtml(
-      head,
+      helmetContext.helmet,
       assets,
       htmlContent,
-      state,
+      /* omit redux router part from the initial state */
+      _omit(state, 'router')
     );
 
     if (!_isEmpty(branch) && branch[0].route.cache) {

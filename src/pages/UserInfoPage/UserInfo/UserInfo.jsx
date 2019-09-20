@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FETCH_USER_INFO } from '_redux/users/actions';
-import createAction from '_utils/createAction';
-import { currentUserSelector } from '_redux/users/selectors';
+import { FETCH_USER_INFO } from 'models/users/actions';
+import createAction from 'utils/createAction';
+import { currentUserSelector } from 'models/users/selectors';
 
 import UserCard from './UserCard';
 
 @connect(
   state => ({ userInfo: currentUserSelector(state) }),
-  { onFetchUserInfo: createAction(FETCH_USER_INFO) },
+  { onFetchUserInfo: createAction(FETCH_USER_INFO) }
 )
-
 @withRouter
-
 class UserInfo extends PureComponent {
   static propTypes = {
     userInfo: PropTypes.object,
@@ -24,21 +22,20 @@ class UserInfo extends PureComponent {
   };
 
   componentDidMount() {
-    const { onFetchUserInfo, match: { params } } = this.props;
+    const {
+      onFetchUserInfo,
+      match: { params },
+    } = this.props;
     onFetchUserInfo(params.id);
   }
 
   renderUserCard = () => {
     const { userInfo } = this.props;
     return <UserCard {...userInfo} />;
-  }
+  };
 
   render() {
-    return (
-      <Fragment>
-        {this.renderUserCard()}
-      </Fragment>
-    );
+    return <Fragment>{this.renderUserCard()}</Fragment>;
   }
 }
 

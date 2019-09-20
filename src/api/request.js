@@ -1,12 +1,12 @@
 import axios from 'axios';
-import config from '_config';
+import config from 'config';
 
 const BASE_URL = '/api';
 const STUB_DELAY = 1000;
 const METHODS = ['GET', 'DELETE', 'HEAD', 'POST', 'PUT', 'PATCH'];
 
-const sidedRequest = (opts) => {
-  if (!__SERVER__) {
+const sidedRequest = opts => {
+  if (process.env.RUNTIME_ENV === 'client') {
     return axios({ baseURL: BASE_URL, ...opts });
   }
 
@@ -16,17 +16,17 @@ const sidedRequest = (opts) => {
 export const externalRequest = (externalUrl, opts) =>
   axios({ url: externalUrl, ...opts });
 
-const stubRequest = (opts) => {
+const stubRequest = opts => {
   const { stubData, stubDelay = STUB_DELAY } = opts;
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve({ data: stubData });
     }, stubDelay);
   });
 };
 
-const doRequest = (opts) => {
+const doRequest = opts => {
   if (opts.stubData) {
     return stubRequest(opts);
   }

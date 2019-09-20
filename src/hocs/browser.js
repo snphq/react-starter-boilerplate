@@ -1,5 +1,5 @@
 import React from 'react';
-import getBrowserInfo from '_utils/getBrowserInfo';
+import getBrowserInfo from 'utils/getBrowserInfo';
 
 const {
   browser: { name, version },

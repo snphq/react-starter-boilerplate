@@ -4,9 +4,10 @@ import { render, hydrate, unmountComponentAtNode } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 import { ConnectedRouter } from 'connected-react-router';
+import { HelmetProvider } from 'react-helmet-async';
 
 import routes from './routes';
-import { rootSaga } from '_redux';
+import { rootSaga } from 'models';
 import configureStore from './store';
 
 import './components/App';
@@ -20,7 +21,7 @@ const store = configureStore(history, initialState);
 /* Start saga middleware */
 store.runSaga(rootSaga);
 
-const renderDom = __INJECT_HTML__ ? hydrate : render;
+const renderDom = process.env.APP_ENV === 'development' ? render : hydrate;
 const mountNode = document.getElementById('react-view');
 
 const renderApp = () => {
@@ -30,10 +31,12 @@ const renderApp = () => {
   renderDom(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App routes={routes} />
+        <HelmetProvider>
+          <App routes={routes} />
+        </HelmetProvider>
       </ConnectedRouter>
     </Provider>,
-    mountNode,
+    mountNode
   );
 };
 

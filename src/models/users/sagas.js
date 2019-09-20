@@ -1,11 +1,8 @@
 import { takeLatest, all, put, call } from 'redux-saga/effects';
 
-import createAction from '_utils/createAction';
+import createAction from 'utils/createAction';
 
-import {
-  fetchUsersExternal,
-  fetchUserExternal,
-} from '_api';
+import { fetchUsersExternal, fetchUserExternal } from 'api';
 
 import {
   SET_USERS,
@@ -32,7 +29,7 @@ export function* fetchUser({ payload }) {
   }
 }
 
-export default function* () {
+export default function*() {
   yield all([
     takeLatest(FETCH_USERS, fetchUsers),
     takeLatest(FETCH_USER_INFO, fetchUser),

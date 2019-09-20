@@ -1,19 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import CSSModules from 'react-css-modules';
 
 import styles from './UserCard.scss';
 
-const UserCard = (props) => {
-  const {
-    name,
-    phone,
-    email,
-    website,
-  } = props;
+const UserCard = props => {
+  const { name, phone, email, website } = props;
 
   return (
-    <div styleName="root">
+    <div className={styles.root}>
       <h4>User Card</h4>
       <ul>
         <li>Name: {name}</li>
@@ -39,4 +33,4 @@ UserCard.defaultProps = {
   website: '',
 };
 
-export default CSSModules(UserCard, styles);
+export default UserCard;

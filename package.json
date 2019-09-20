@@ -44,13 +44,13 @@
   },
   "betterScripts": {
     "start": {
-      "command": "node --inspect ./index.js",
+      "command": "node ./index.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
-        "PORT": 5000,
-        "HTML_INJECTION": "none",
-        "APP_ENV": "develoment"
+        "APP_ENV": "development",
+        "RUNTIME_ENV": "server",
+        "PORT": 5000
       }
     },
     "start:staging": {
@@ -59,8 +59,8 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
-        "HTML_INJECTION": "inject",
-        "APP_ENV": "staging"
+        "APP_ENV": "staging",
+        "RUNTIME_ENV": "server"
       }
     },
     "start:production": {
@@ -69,26 +69,28 @@
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
-        "HTML_INJECTION": "inject",
+        "RUNTIME_ENV": "server",
         "APP_ENV": "production"
       }
     },
     "build:staging": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./webpack",
       "env": {
         "NODE_ENV": "production",
-        "APP_ENV": "staging"
+        "APP_ENV": "staging",
+        "RUNTIME_ENV": "server"
       }
     },
     "build:production": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./webpack",
       "env": {
         "NODE_ENV": "production",
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "RUNTIME_ENV": "server"
       }
     },
     "analyze": {
-      "command": "webpack --progress --hide-modules --config ./tools/webpack/config.babel.js",
+      "command": "webpack --progress --hide-modules --config ./webpack",
       "env": {
         "NODE_ENV": "analyze"
       }
@@ -103,136 +105,6 @@
       "command": "rimraf ./public/assets"
     }
   },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "useBuiltIns": "usage"
-        }
-      ],
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "dynamic-import-node",
-      "lodash",
-      [
-        "@babel/plugin-proposal-decorators",
-        {
-          "legacy": true
-        }
-      ],
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ],
-      [
-        "module-resolver",
-        {
-          "alias": {
-            "_redux": "./src/_redux",
-            "_hocs": "./src/hocs",
-            "_utils": "./src/utils",
-            "_api": "./src/api",
-            "_config": "./src/config",
-            "_store": "./src/store",
-            "_pages": "./src/pages",
-            "_containers": "./src/containers",
-            "_components": "./src/components",
-            "_styles": "./src/styles",
-            "_images": "./src/assets/images"
-          }
-        }
-      ]
-    ]
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": [
-      "plugin:lodash-fp/recommended",
-      "airbnb"
-    ],
-    "plugins": [
-      "lodash-fp",
-      "react"
-    ],
-    "settings": {
-      "import/resolver": {
-        "webpack": {
-          "config": "./tools/webpack/config.babel.js"
-        }
-      }
-    },
-    "env": {
-      "browser": true,
-      "node": true,
-      "es6": true
-    },
-    "rules": {
-      "global-require": "off",
-      "no-console": "off",
-      "no-underscore-dangle": "off",
-      "function-paren-newline": "off",
-      "import/first": "off",
-      "import/prefer-default-export": "off",
-      "react/jsx-filename-extension": [
-        "error",
-        {
-          "extensions": [
-            ".js",
-            ".jsx"
-          ]
-        }
-      ],
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          "devDependencies": true
-        }
-      ],
-      "jsx-a11y/anchor-is-valid": [
-        "error",
-        {
-          "specialLink": [
-            "to"
-          ]
-        }
-      ],
-      "jsx-a11y/no-static-element-interactions": "off",
-      "jsx-a11y/click-events-have-key-events": "off",
-      "lodash-fp/use-fp": "off",
-      "lodash-fp/consistent-name": "off",
-      "react/forbid-prop-types": "off",
-      "react/require-default-props": "off"
-    },
-    "globals": {
-      "__CLIENT__": true,
-      "__SERVER__": true,
-      "__DEV__": true,
-      "__INJECT_HTML__": true,
-      "__APP_ENV__": true
-    }
-  },
-  "stylelint": {
-    "extends": [
-      "stylelint-config-standard"
-    ],
-    "rules": {
-      "string-quotes": "single",
-      "at-rule-no-unknown": null,
-      "selector-pseudo-class-no-unknown": [
-        true,
-        {
-          "ignorePseudoClasses": [
-            "global",
-            "local"
-          ]
-        }
-      ]
-    }
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions"
@@ -244,45 +116,37 @@
     "chalk": "^2.4.1",
     "compression": "^1.7.2",
     "connected-react-router": "^6.3.1",
-    "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
     "helmet": "^3.12.0",
     "history": "^4.9.0",
     "hpp": "^0.2.2",
-    "js-cookie": "^2.2.0",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.15",
     "memory-cache": "^0.2.0",
     "morgan": "^1.9.0",
-    "normalize.css": "^8.0.0",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "prop-types": "^15.7.2",
-    "react": "^16.8.2",
-    "react-css-modules": "^4.7.2",
-    "react-dom": "^16.8.2",
-    "react-helmet": "^5.2.0",
-    "react-redux": "^6.0.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet-async": "^1.0.2",
+    "react-redux": "^7.1.0",
     "react-router-config": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "redux": "^4.0.0",
-    "redux-saga": "0.16.0",
-    "redux-thunk": "^2.2.0",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.0.5",
     "reselect": "^4.0.0",
     "serialize-javascript": "^1.5.0",
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.3",
+    "@babel/core": "^7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.3.3",
     "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-transform-runtime": "^7.6.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "asset-require-hook": "^1.2.0",
     "autoprefixer": "^9.4.8",
     "babel-eslint": "^8.2.3",
-    "babel-loader": "^8.0.0-beta",
-    "babel-plugin-dynamic-import-node": "^2.2.0",
-    "babel-plugin-lodash": "^3.3.2",
+    "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^3.1.1",
     "better-npm-run": "^0.1.0",
     "compression-webpack-plugin": "^1.1.11",
@@ -291,25 +155,24 @@
     "css-modules-require-hook": "^4.2.3",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-import-resolver-webpack": "^0.9.0",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-lodash-fp": "^2.1.3",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.4.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-minifier": "^3.5.15",
-    "identity-obj-proxy": "^3.0.0",
     "imagemin-webpack-plugin": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "opn": "^5.3.0",
-    "postcss": "^6.0.22",
-    "postcss-loader": "^2.1.4",
-    "raf": "^3.4.0",
-    "react-test-renderer": "^16.3.2",
-    "redux-mock-store": "^1.5.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss": "^7.0.18",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.18.2",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
@@ -319,15 +182,17 @@
     "stylelint-scss": "^3.1.0",
     "stylelint-webpack-plugin": "^0.10.4",
     "url-loader": "^1.0.1",
-    "webpack": "^4.6.0",
+    "webpack": "^4.39.2",
     "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-cli": "^2.0.15",
+    "webpack-cli": "^3.3.7",
     "webpack-dev-middleware": "^3.1.3",
     "webpack-hot-middleware": "^2.22.1",
     "webpack-manifest-plugin": "^2.0.1",
+    "webpack-merge": "^4.2.1",
     "webpack-notifier": "^1.8.0"
   },
   "resolutions": {
-    "webpack-sources": "^1.1.0"
+    "webpack-sources": "^1.1.0",
+    "core-js": "^2.4.0"
   }
 }

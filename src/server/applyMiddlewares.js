@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import hpp from 'hpp';
 import favicon from 'serve-favicon';
 
-export default (app) => {
+export default app => {
   app.use(helmet());
   app.use(hpp());
   app.use(compression());

@@ -1,10 +1,7 @@
-import HomePage from '_pages/HomePage';
-import UserInfoPage from '_pages/UserInfoPage';
+import HomePage from 'pages/HomePage';
+import UserInfoPage from 'pages/UserInfoPage';
 
-import {
-  fetchUsers,
-  fetchUser,
-} from '_redux/users/sagas';
+import { fetchUsers, fetchUser } from 'models/users/sagas';
 
 export default [
   {
@@ -12,16 +9,12 @@ export default [
     exact: true,
     cache: false,
     component: HomePage,
-    sagasToRun: [
-      fetchUsers,
-    ],
+    sagasToRun: [fetchUsers],
   },
   {
     path: '/users/:id',
     cache: false,
     component: UserInfoPage,
-    sagasToRun: [
-      [fetchUser, ({ id }) => ({ payload: id })],
-    ],
+    sagasToRun: [[fetchUser, ({ id }) => ({ payload: id })]],
   },
 ];

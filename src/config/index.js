@@ -1,10 +1,24 @@
-if (__APP_ENV__ === 'staging') {
-  /* including staging config */
-  module.exports = require('./staging');
-} else if (__APP_ENV__ === 'production') {
-  /* including production config */
-  module.exports = require('./production');
-} else {
-  /* including default (development) config */
-  module.exports = require('./default');
-}
+import production from './production';
+import staging from './staging';
+
+const configs = {
+  production,
+  staging,
+};
+
+export default {
+  port: process.env.PORT,
+  defaultLocale: 'en',
+  app: {
+    htmlAttributes: { lang: 'en' },
+    title: 'React Starter Boilerplate',
+    titleTemplate: 'React Starter Boilerplate - %s',
+    meta: [
+      {
+        name: 'description',
+        content: 'The best react universal starter boilerplate in the world.',
+      },
+    ],
+  },
+  ...configs[process.env.APP_ENV],
+};
