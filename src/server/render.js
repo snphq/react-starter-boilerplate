@@ -9,6 +9,7 @@ import { createMemoryHistory } from 'history';
 
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
+import _omit from 'lodash/omit';
 
 import App from '../components/App';
 import routes from '../routes';
@@ -31,6 +32,7 @@ export default async route => {
     await loadBranchData(store, branch);
 
     const helmetContext = {};
+
     const AppComponent = (
       <Provider store={store}>
         <StaticRouter location={route} context={{}}>
@@ -44,7 +46,13 @@ export default async route => {
     const htmlContent = renderToString(AppComponent);
     const state = store.getState();
 
-    const html = renderHtml(helmetContext.helmet, assets, htmlContent, state);
+    const html = renderHtml(
+      helmetContext.helmet,
+      assets,
+      htmlContent,
+      /* omit redux router part from the initial state */
+      _omit(state, 'router')
+    );
 
     if (!_isEmpty(branch) && branch[0].route.cache) {
       cache.put(route, html);
