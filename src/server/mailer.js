@@ -1,11 +1,11 @@
 import mailgun from 'mailgun-js';
 import util from 'util';
 
-import config from '../config';
+import sharedConfig from '../config/shared';
 
 const mailer = mailgun({
-  apiKey: config.mailer.apiKey,
-  domain: config.mailer.domain,
+  apiKey: sharedConfig.mailer.apiKey,
+  domain: sharedConfig.mailer.domain,
 });
 
 const messagesService = mailer.messages();

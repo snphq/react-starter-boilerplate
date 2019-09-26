@@ -29,7 +29,7 @@ export default app => {
       });
     });
 
-  app.post('/mail', formiddable.any(), (req, res) => {
+  app.post('/email', formiddable.any(), (req, res) => {
     (async () => {
       try {
         await sendMail({

@@ -12,8 +12,6 @@ export default {
   mailer: {
     from: 'Mailgun <me@samples.mailgun.org>',
     to: 'alan.hadzaragov@saltpepper.ru',
-    apiKey: 'f039470702b628d06a1e6921a19bc369-bbbc8336-19efd2f0',
-    domain: 'sandbox84f999db5cac4616bc25fdb741e871f6.mailgun.org',
   },
   app: {
     htmlAttributes: { lang: 'en' },
