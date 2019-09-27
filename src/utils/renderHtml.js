@@ -6,7 +6,7 @@ import { minify } from 'html-minifier';
 const isDev = process.env.APP_ENV === 'development';
 
 export default (head, assets, htmlContent, initialState) => {
-  const envAssets = isDev ? { js: '/assets/main.js' } : assets;
+  const envAssets = isDev ? { js: '/main.js' } : assets;
 
   const html = `
     <!doctype html>

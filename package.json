@@ -29,18 +29,18 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "yarn mockmanifest && better-npm-run start",
-    "start:dashboard": "webpack-dashboard yarn start",
+    "start": "yarn mock:manifest && yarn copy:favicon && better-npm-run start",
     "start:production": "yarn build:production && better-npm-run start:production",
     "start:staging": "yarn build:staging && better-npm-run start:staging",
-    "build:staging": "yarn clean:build && better-npm-run build:staging",
-    "build:production": "yarn clean:build && better-npm-run build:production",
+    "build:staging": "yarn clean:build && yarn copy:favicon && better-npm-run build:staging",
+    "build:production": "yarn clean:build && yarn copy:favicon && better-npm-run build:production",
     "analyze": "yarn clean:build && better-npm-run analyze",
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
     "lint:style": "better-npm-run lint:style",
     "clean:build": "better-npm-run clean:build",
-    "mockmanifest": "echo '{}' >./public/webpack-assets.json"
+    "copy:favicon": "node ./tools/scripts/copy-favicon.js",
+    "mock:manifest": "node ./tools/scripts/mock-manifest.js"
   },
   "betterScripts": {
     "start": {
@@ -164,6 +164,7 @@
     "eslint-plugin-react": "^7.4.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
+    "fs-extra": "^8.1.0",
     "html-minifier": "^3.5.15",
     "imagemin-webpack-plugin": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",

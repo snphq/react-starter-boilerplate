@@ -18,7 +18,7 @@ import configureStore from '../store';
 import loadBranchData from './loadBranchData';
 
 /* eslint-disable import/extensions */
-import assets from '../../public/webpack-assets';
+import assets from '../../public/webpack-assets.json';
 /* eslint-disable import/extensions */
 
 export default async route => {
