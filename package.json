@@ -30,8 +30,10 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn mock:manifest && yarn copy:favicon && better-npm-run start",
+    "start:spa": "yarn mock:manifest && yarn copy:favicon && better-npm-run start:spa",
     "start:production": "yarn build:production && better-npm-run start:production",
     "start:staging": "yarn build:staging && better-npm-run start:staging",
+    "start:static": "better-npm-run start:static",
     "build:staging": "yarn clean:build && yarn copy:favicon && better-npm-run build:staging",
     "build:production": "yarn clean:build && yarn copy:favicon && better-npm-run build:production",
     "analyze": "yarn clean:build && better-npm-run analyze",
@@ -44,8 +46,20 @@
   },
   "betterScripts": {
     "start": {
-      "command": "node ./index.js",
+      "command": "node --inspect ./index.js",
       "env": {
+        "APP_MODE": "ssr",
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "APP_ENV": "development",
+        "RUNTIME_ENV": "server",
+        "PORT": 5000
+      }
+    },
+    "start:spa": {
+      "command": "node --inspect ./index.js",
+      "env": {
+        "APP_MODE": "spa",
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
         "APP_ENV": "development",
@@ -56,6 +70,7 @@
     "start:staging": {
       "command": "node ./index.js",
       "env": {
+        "APP_MODE": "ssr",
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
@@ -66,11 +81,18 @@
     "start:production": {
       "command": "node ./index.js",
       "env": {
+        "APP_MODE": "ssr",
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
         "RUNTIME_ENV": "server",
         "APP_ENV": "production"
+      }
+    },
+    "start:static": {
+      "command": "node ./tools/static-server",
+      "env": {
+        "PORT": 8080
       }
     },
     "build:staging": {
