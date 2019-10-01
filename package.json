@@ -46,7 +46,7 @@
   },
   "betterScripts": {
     "start": {
-      "command": "node --inspect ./index.js",
+      "command": "node ./index.js",
       "env": {
         "APP_MODE": "ssr",
         "NODE_PATH": "./src",
@@ -57,7 +57,7 @@
       }
     },
     "start:spa": {
-      "command": "node --inspect ./index.js",
+      "command": "node ./index.js",
       "env": {
         "APP_MODE": "spa",
         "NODE_PATH": "./src",
