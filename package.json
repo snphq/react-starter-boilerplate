@@ -35,13 +35,16 @@
     "start:staging": "yarn build:staging && better-npm-run start:staging",
     "start:static": "better-npm-run start:static",
     "build:staging": "yarn clean:build && yarn copy:favicon && better-npm-run build:staging",
+    "build:spa:staging": "yarn build:staging && yarn render:index",
     "build:production": "yarn clean:build && yarn copy:favicon && better-npm-run build:production",
+    "build:spa:production": "yarn build:production && yarn render:index",
     "analyze": "yarn clean:build && better-npm-run analyze",
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
     "lint:style": "better-npm-run lint:style",
     "clean:build": "better-npm-run clean:build",
     "copy:favicon": "node ./tools/scripts/copy-favicon.js",
+    "render:index": "node ./tools/scripts/render-index.js",
     "mock:manifest": "node ./tools/scripts/mock-manifest.js"
   },
   "betterScripts": {
@@ -124,7 +127,7 @@
       "command": "stylelint --fix \"./src/**/*.scss\""
     },
     "clean:build": {
-      "command": "rimraf ./public/assets"
+      "command": "rimraf ./public/*"
     }
   },
   "browserslist": [
