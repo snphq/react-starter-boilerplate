@@ -55,11 +55,11 @@ export default async route => {
     );
 
     if (!_isEmpty(branch) && branch[0].route.cache) {
-      cache.put(route, html);
+      memoryCache.put(route, html);
     }
 
     return Promise.resolve(html);
   }
 
-  return Promise.resolve(cache.get(route));
+  return Promise.resolve(memoryCache.get(route));
 };
