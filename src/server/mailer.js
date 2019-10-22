@@ -8,20 +8,33 @@ const mailer = mailgun({
   domain: sharedConfig.mailer.domain,
 });
 
-const messagesService = mailer.messages();
-messagesService.send = util.promisify(messagesService.send);
+const list = mailer.lists(
+  `${sharedConfig.mailer.list}@${sharedConfig.mailer.domain}`
+);
 
-export default ({ from, to, subject, text, attachments }) =>
-  messagesService.send({
-    to,
-    text,
-    from,
-    subject,
-    attachment: attachments.map(
-      file =>
-        new mailer.Attachment({
-          data: file.buffer,
-          filename: file.originalname,
-        })
-    ),
-  });
+const messagesService = mailer.messages();
+const members = list.members();
+
+messagesService.send = util.promisify(messagesService.send);
+members.create = util.promisify(members.create);
+
+export default ({ from, to, subject, text, attachments, email, name }) =>
+  Promise.all([
+    members.create({
+      name,
+      address: email,
+    }),
+    messagesService.send({
+      to,
+      text,
+      from,
+      subject,
+      attachment: attachments.map(
+        file =>
+          new mailer.Attachment({
+            data: file.buffer,
+            filename: file.originalname,
+          })
+      ),
+    }),
+  ]);

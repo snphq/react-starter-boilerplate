@@ -18,11 +18,13 @@ export default app => {
             const html = await render(req.path);
 
             res.status(200).send(html);
-          } catch (err) {
+          } catch (error) {
             res.status(500).send('Internal server error');
 
             if (process.env.APP_ENV === 'development') {
-              console.error(chalk.red(`==> 😭 Internal server error: ${err}`));
+              console.error(
+                chalk.red(`==> 😭 Internal server error: ${error}`)
+              );
             }
           }
         })();
@@ -35,17 +37,23 @@ export default app => {
         await sendMail({
           from: config.mailer.from,
           to: config.mailer.to,
+          email: req.body.email,
+          name: req.body.name,
           subject: req.body.subject,
           text: req.body.text,
           attachments: req.files,
         });
 
         res.status(200).send('Successfully sent!');
-      } catch (err) {
-        res.status(500).send('Internal server error');
+      } catch (error) {
+        if (error.statusCode === 400) {
+          res.status(400).send({ error: `${error}` });
+        } else {
+          res.status(500).send('Internal server error');
 
-        if (process.env.APP_ENV === 'development') {
-          console.error(chalk.red(`==> 😭 Internal server error: ${err}`));
+          if (process.env.APP_ENV === 'development') {
+            console.error(chalk.red(`==> 😭 Internal server error: ${error}`));
+          }
         }
       }
     })();
@@ -57,11 +65,11 @@ export default app => {
         const html = await render(req.path);
 
         res.status(404).send(html);
-      } catch (err) {
+      } catch (error) {
         res.status(500).send('Internal server error');
 
         if (process.env.APP_ENV === 'development') {
-          console.error(chalk.red(`==> 😭 Internal server error: ${err}`));
+          console.error(chalk.red(`==> 😭 Internal server error: ${error}`));
         }
       }
     })();
