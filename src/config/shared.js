@@ -3,7 +3,5 @@ export default {
   You can mock it here for the development mode */
   mailer: {
     apiKey: 'testkey',
-    domain: 'testdomain',
-    list: 'test-list',
   },
 };

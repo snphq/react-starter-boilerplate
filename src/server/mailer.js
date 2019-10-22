@@ -2,15 +2,14 @@ import mailgun from 'mailgun-js';
 import util from 'util';
 
 import sharedConfig from '../config/shared';
+import config from '../config';
 
 const mailer = mailgun({
   apiKey: sharedConfig.mailer.apiKey,
-  domain: sharedConfig.mailer.domain,
+  domain: config.mailer.domain,
 });
 
-const list = mailer.lists(
-  `${sharedConfig.mailer.list}@${sharedConfig.mailer.domain}`
-);
+const list = mailer.lists(`${config.mailer.list}@${config.mailer.domain}`);
 
 const messagesService = mailer.messages();
 const members = list.members();

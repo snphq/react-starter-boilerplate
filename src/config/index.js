@@ -12,6 +12,8 @@ export default {
   mailer: {
     from: 'Mailgun <me@samples.mailgun.org>',
     to: 'alan.hadzaragov@saltpepper.ru',
+    domain: 'test-list@sandbox46deb311677e43eaac79065c1e310df2.mailgun.org',
+    list: 'test-list',
   },
   app: {
     htmlAttributes: { lang: 'en' },
