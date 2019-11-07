@@ -1,4 +1,4 @@
-@import '~styles/variables';
+@use '~styles/variables' as *;
 
 body {
   background-color: $color-dark-gray;
@@ -20,7 +20,7 @@ body {
   align-items: center;
   padding: 15px;
   font-weight: bold;
-  font-size: 25px;
+  font-size: $font-title;
 
   img {
     height: 70px;

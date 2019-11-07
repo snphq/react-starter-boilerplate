@@ -56,9 +56,8 @@ module.exports = [
       {
         loader: 'sass',
         options: {
-          outputStyle: 'expanded',
           sourceMap: true,
-          sourceMapContents: !isDev,
+          implementation: require('sass'),
         },
       },
     ],
