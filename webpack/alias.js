@@ -4,7 +4,7 @@ module.exports = {
   models: path.resolve(process.cwd(), 'src/models'),
   utils: path.resolve(process.cwd(), 'src/utils'),
   api: path.resolve(process.cwd(), 'src/api'),
-  hocs: path.resolve(process.cwd(), 'src/hocs'),
+  hooks: path.resolve(process.cwd(), 'src/hooks'),
   config: path.resolve(process.cwd(), 'src/config'),
   store: path.resolve(process.cwd(), 'src/store'),
   pages: path.resolve(process.cwd(), 'src/pages'),

@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet-async';
 
 import Users from './Users';
 
-const HomePage = () => (
+const Home = () => (
   <Fragment>
     <Helmet title="Home" />
     <Users />
   </Fragment>
 );
 
-export default HomePage;
+export default Home;

@@ -8,22 +8,30 @@ import AppRouter from 'components/AppRouter';
 import 'styles/normalize.scss';
 import logo from 'images/logo.svg';
 import styles from './App.scss';
+import useBrowser from 'hooks/useBrowser';
 
-const App = ({ routes }) => (
-  <div className={styles.app}>
-    <Helmet {...config.app} />
-    <div className={styles.header}>
-      <img src={logo} alt="logo" role="presentation" />
-      <h1>{config.app.title}</h1>
+const App = ({ routes }) => {
+  const browser = useBrowser();
+
+  if (RUNTIME_ENV === 'client') {
+    console.info('browser', browser);
+  }
+
+  return (
+    <div className={styles.app}>
+      <Helmet {...config.app} />
+      <div className={styles.header}>
+        <img src={logo} alt="logo" role="presentation" />
+        <h1>{config.app.title}</h1>
+      </div>
+      <hr />
+      <AppRouter routes={routes} />
     </div>
-    <hr />
-    <AppRouter routes={routes} />
-  </div>
-);
+  );
+};
 
 App.propTypes = {
   routes: PropTypes.array,
-  browser: PropTypes.object,
 };
 
 export default App;

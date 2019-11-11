@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import styles from './NotFound.scss';
 
 const NotFound = () => (
-  <div className={styles.root}>
+  <Fragment>
     <Helmet title="Oops" />
-    <p>Oops, Page was not found!</p>
-  </div>
+    <div className={styles.root}>
+      <p>Oops, Page was not found!</p>
+    </div>
+  </Fragment>
 );
 
 export default NotFound;

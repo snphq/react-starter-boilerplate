@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import NotFound from './NotFound';
+import UserCard from './UserCard';
 
-const NotFoundPage = () => (
+const UserInfo = () => (
   <Fragment>
     <Helmet title="User info" />
-    <NotFound />
+    <UserCard />
   </Fragment>
 );
 
-export default NotFoundPage;
+export default UserInfo;
