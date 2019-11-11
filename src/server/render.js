@@ -1,25 +1,30 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { HelmetProvider } from 'react-helmet-async';
-import { StaticRouter } from 'react-router-dom';
-import { renderToString } from 'react-dom/server';
 import memoryCache from 'memory-cache';
 import { matchRoutes } from 'react-router-config';
 import { createMemoryHistory } from 'history';
+import { minify } from 'html-minifier';
 
 import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _omit from 'lodash/omit';
 
-import App from '../components/App';
 import routes from '../routes';
 import renderHtml from '../utils/renderHtml';
+import renderHead from '../utils/renderHead';
 import configureStore from '../store';
 import loadBranchData from './loadBranchData';
+import config from '../config';
 
 /* eslint-disable import/extensions */
-import assets from '../../public/webpack-assets';
+import assets from '../../public/webpack-assets.json';
 /* eslint-disable import/extensions */
+
+const isSSR = process.env.APP_MODE === 'ssr';
+const isDev = process.env.APP_ENV === 'development';
+
+const renderApp =
+  process.env.APP_MODE === 'ssr'
+    ? require('../utils/renderApp').default
+    : () => '';
 
 export default async route => {
   const cache = memoryCache.get(route);
@@ -29,37 +34,40 @@ export default async route => {
     const store = configureStore(history, {});
     const branch = matchRoutes(routes, route);
 
-    await loadBranchData(store, branch);
+    if (!isDev && isSSR) {
+      await loadBranchData(store, branch);
+    }
 
     const helmetContext = {};
 
-    const AppComponent = (
-      <Provider store={store}>
-        <StaticRouter location={route} context={{}}>
-          <HelmetProvider context={helmetContext}>
-            <App routes={routes} />
-          </HelmetProvider>
-        </StaticRouter>
-      </Provider>
-    );
+    const htmlContent = renderApp(route, store, helmetContext);
 
-    const htmlContent = renderToString(AppComponent);
-    const state = store.getState();
+    const head = isSSR
+      ? {
+          htmlAttributes: helmetContext.helmet.htmlAttributes.toString(),
+          title: helmetContext.helmet.title.toString(),
+          base: helmetContext.helmet.base.toString(),
+          meta: helmetContext.helmet.meta.toString(),
+          link: helmetContext.helmet.link.toString(),
+          script: helmetContext.helmet.script.toString(),
+        }
+      : renderHead();
 
     const html = renderHtml(
-      helmetContext.helmet,
-      assets,
-      htmlContent,
+      head,
+      isDev ? { js: '/main.js' } : assets,
+      /* do not include rendered string to html in development mode to allow hmr */
+      isDev ? '' : htmlContent,
       /* omit redux router part from the initial state */
-      _omit(state, 'router')
+      _omit(store.getState(), 'router')
     );
 
     if (!_isEmpty(branch) && branch[0].route.cache) {
-      cache.put(route, html);
+      memoryCache.put(route, html);
     }
 
-    return Promise.resolve(html);
+    return Promise.resolve(isDev ? html : minify(html, config.htmlMinifier));
   }
 
-  return Promise.resolve(cache.get(route));
+  return Promise.resolve(memoryCache.get(route));
 };

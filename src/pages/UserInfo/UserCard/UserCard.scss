@@ -1,0 +1,20 @@
+@import '~styles/variables';
+
+.root {
+  color: $color-white;
+  padding: 20px 0 0 20px;
+
+  h4 {
+    font-size: $font-header;
+    margin-bottom: 20px;
+  }
+
+  ul {
+    padding-left: 18px;
+    list-style-type: disc;
+
+    li {
+      margin-bottom: 0.7em;
+    }
+  }
+}

@@ -3,7 +3,7 @@
 
 coverage
 node_modules
-public/assets
+public
 webpack-assets.json
 webpack-stats.json
 .vscode

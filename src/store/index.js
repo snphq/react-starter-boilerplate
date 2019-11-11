@@ -1,5 +1,5 @@
+import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import { routerMiddleware } from 'connected-react-router';
-import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
 
 import { createRootReducer } from 'models';
@@ -7,21 +7,15 @@ import { createRootReducer } from 'models';
 export default (history, initialState) => {
   const sagaMiddleware = createSagaMiddleware();
 
-  const middlewares = [routerMiddleware(history), sagaMiddleware];
-
-  const composeEnhancers =
-    (process.env.APP_ENV === 'development' &&
-      typeof window === 'object' &&
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-    compose;
-
-  const enhancers = composeEnhancers(applyMiddleware(...middlewares));
-
-  const store = createStore(
-    createRootReducer(history),
-    initialState,
-    enhancers
-  );
+  const store = configureStore({
+    middleware: [
+      ...getDefaultMiddleware(),
+      routerMiddleware(history),
+      sagaMiddleware,
+    ],
+    reducer: createRootReducer(history),
+    preloadedState: initialState,
+  });
 
   store.runSaga = sagaMiddleware.run;
   store.close = () => store.dispatch(END);

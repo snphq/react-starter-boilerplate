@@ -29,23 +29,40 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "yarn mockmanifest && better-npm-run start",
-    "start:dashboard": "webpack-dashboard yarn start",
+    "start": "yarn mock:manifest && yarn copy:favicon && better-npm-run start",
+    "start:spa": "yarn mock:manifest && yarn copy:favicon && better-npm-run start:spa",
     "start:production": "yarn build:production && better-npm-run start:production",
     "start:staging": "yarn build:staging && better-npm-run start:staging",
-    "build:staging": "yarn clean:build && better-npm-run build:staging",
-    "build:production": "yarn clean:build && better-npm-run build:production",
+    "start:static": "better-npm-run start:static",
+    "build:staging": "yarn clean:build && yarn copy:favicon && better-npm-run build:staging",
+    "build:spa:staging": "yarn build:staging && yarn render:index",
+    "build:production": "yarn clean:build && yarn copy:favicon && better-npm-run build:production",
+    "build:spa:production": "yarn build:production && yarn render:index",
     "analyze": "yarn clean:build && better-npm-run analyze",
     "lint": "yarn lint:js && yarn lint:style",
     "lint:js": "better-npm-run lint:js",
     "lint:style": "better-npm-run lint:style",
     "clean:build": "better-npm-run clean:build",
-    "mockmanifest": "echo '{}' >./public/webpack-assets.json"
+    "copy:favicon": "node ./tools/scripts/copy-favicon.js",
+    "render:index": "node ./tools/scripts/render-index.js",
+    "mock:manifest": "node ./tools/scripts/mock-manifest.js"
   },
   "betterScripts": {
     "start": {
       "command": "node ./index.js",
       "env": {
+        "APP_MODE": "ssr",
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "APP_ENV": "development",
+        "RUNTIME_ENV": "server",
+        "PORT": 5000
+      }
+    },
+    "start:spa": {
+      "command": "node ./index.js",
+      "env": {
+        "APP_MODE": "spa",
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
         "APP_ENV": "development",
@@ -56,6 +73,7 @@
     "start:staging": {
       "command": "node ./index.js",
       "env": {
+        "APP_MODE": "ssr",
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
@@ -66,11 +84,18 @@
     "start:production": {
       "command": "node ./index.js",
       "env": {
+        "APP_MODE": "ssr",
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
         "PORT": 8080,
         "RUNTIME_ENV": "server",
         "APP_ENV": "production"
+      }
+    },
+    "start:static": {
+      "command": "node ./tools/static-server",
+      "env": {
+        "PORT": 8080
       }
     },
     "build:staging": {
@@ -102,7 +127,7 @@
       "command": "stylelint --fix \"./src/**/*.scss\""
     },
     "clean:build": {
-      "command": "rimraf ./public/assets"
+      "command": "rimraf ./public/*"
     }
   },
   "browserslist": [
@@ -117,22 +142,27 @@
     "compression": "^1.7.2",
     "connected-react-router": "^6.3.1",
     "express": "^4.16.3",
+    "express-formidable": "^1.2.0",
     "helmet": "^3.12.0",
     "history": "^4.9.0",
     "hpp": "^0.2.2",
     "lodash": "^4.17.15",
+    "mailgun-js": "^0.22.0",
     "memory-cache": "^0.2.0",
     "morgan": "^1.9.0",
+    "multer": "^1.4.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet-async": "^1.0.2",
     "react-redux": "^7.1.0",
-    "react-router-config": "^5.0.0",
-    "react-router-dom": "^5.0.0",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
+    "redux-starter-kit": "^1.0.1",
     "reselect": "^4.0.0",
+    "sass": "^1.23.3",
     "serialize-javascript": "^1.5.0",
     "serve-favicon": "^2.5.0"
   },
@@ -162,19 +192,20 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
+    "fs-extra": "^8.1.0",
     "html-minifier": "^3.5.15",
     "imagemin-webpack-plugin": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",
-    "node-sass": "^4.11.0",
     "opn": "^5.3.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^7.0.18",
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.2",
-    "sass-loader": "^7.0.1",
+    "sass-loader": "^8.0.0",
     "style-loader": "^0.21.0",
     "stylelint": "^9.2.0",
     "stylelint-config-recommended-scss": "^3.2.0",
