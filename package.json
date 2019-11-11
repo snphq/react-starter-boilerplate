@@ -44,7 +44,7 @@
   },
   "betterScripts": {
     "start": {
-      "command": "node ./index.js",
+      "command": "node --inspect ./index.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
@@ -128,10 +128,11 @@
     "react-dom": "^16.9.0",
     "react-helmet-async": "^1.0.2",
     "react-redux": "^7.1.0",
-    "react-router-config": "^5.0.0",
-    "react-router-dom": "^5.0.0",
+    "react-router-config": "^5.1.1",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
+    "redux-starter-kit": "^1.0.1",
     "reselect": "^4.0.0",
     "serialize-javascript": "^1.5.0",
     "serve-favicon": "^2.5.0"
@@ -162,6 +163,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-minifier": "^3.5.15",

@@ -3,21 +3,17 @@ import React from 'react';
 
 import styles from './UserCard.scss';
 
-const UserCard = props => {
-  const { name, phone, email, website } = props;
-
-  return (
-    <div className={styles.root}>
-      <h4>User Card</h4>
-      <ul>
-        <li>Name: {name}</li>
-        <li>Phone: {phone}</li>
-        <li>Email: {email}</li>
-        <li>Website: {website}</li>
-      </ul>
-    </div>
-  );
-};
+const UserCard = ({ name, phone, email, website }) => (
+  <div className={styles.root}>
+    <h4>User Card</h4>
+    <ul>
+      <li>Name: {name}</li>
+      <li>Phone: {phone}</li>
+      <li>Email: {email}</li>
+      <li>Website: {website}</li>
+    </ul>
+  </div>
+);
 
 UserCard.propTypes = {
   name: PropTypes.string,

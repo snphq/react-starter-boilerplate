@@ -1,20 +1,21 @@
 import { takeLatest, all, put, call } from 'redux-saga/effects';
 
-import createAction from 'utils/createAction';
-
 import { fetchUsersExternal, fetchUserExternal } from 'api';
 
 import {
-  SET_USERS,
-  SET_USER_INFO,
-  FETCH_USERS,
-  FETCH_USER_INFO,
-} from './actions';
+  fetchUsers as fetchUsersAction,
+  fetchUser as fetchUserAction,
+  fetchUserSuccess as fetchUserSuccessAction,
+  fetchUsersSuccess as fetchUsersSuccessAction,
+} from './slice';
 
 export function* fetchUsers() {
   try {
     const response = yield call(fetchUsersExternal);
-    yield put(createAction(SET_USERS)(response.data));
+    yield put({
+      type: fetchUsersSuccessAction.type,
+      payload: { users: response.data },
+    });
   } catch (err) {
     console.error(err);
   }
@@ -22,16 +23,17 @@ export function* fetchUsers() {
 
 export function* fetchUser({ payload }) {
   try {
-    const response = yield call(fetchUserExternal, payload);
-    yield put(createAction(SET_USER_INFO)(response.data));
+    const response = yield call(fetchUserExternal, payload.id);
+    yield put({
+      type: fetchUserSuccessAction.type,
+      payload: { user: response.data },
+    });
   } catch (err) {
     console.error(err);
   }
 }
 
 export default function*() {
-  yield all([
-    takeLatest(FETCH_USERS, fetchUsers),
-    takeLatest(FETCH_USER_INFO, fetchUser),
-  ]);
+  yield all([takeLatest(fetchUserAction.type, fetchUser)]);
+  yield all([takeLatest(fetchUsersAction.type, fetchUsers)]);
 }

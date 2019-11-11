@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import styles from './UsersList.scss';
+import styles from './Users.scss';
 
-const UsersList = ({ list }) => (
+const Users = ({ list }) => (
   <div className={styles.root}>
-    <h3>Users List</h3>
+    <h3>Users</h3>
     <ul>
       {list.map(user => (
         <li key={user.id}>
@@ -17,7 +17,7 @@ const UsersList = ({ list }) => (
   </div>
 );
 
-UsersList.propTypes = {
+Users.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -26,8 +26,8 @@ UsersList.propTypes = {
   ),
 };
 
-UsersList.defaultProps = {
+Users.defaultProps = {
   list: [],
 };
 
-export default UsersList;
+export default Users;

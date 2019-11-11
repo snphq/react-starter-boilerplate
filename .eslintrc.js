@@ -1,7 +1,7 @@
 module.exports = {
   parser: 'babel-eslint',
   extends: ['airbnb', 'prettier/react', 'plugin:prettier/recommended'],
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'react-hooks', 'prettier'],
   settings: {
     'import/resolver': {
       webpack: {
@@ -52,10 +52,8 @@ module.exports = {
       },
     ],
 
-    /* prettier conflict */
-    // "arrow-parens": "off",
-    // "object-curly-newline": "off",
-    // "generator-star-spacing": "off"
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
   globals: {
     RUNTIME_ENV: true,

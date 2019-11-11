@@ -1,12 +1,12 @@
-import { rootSelector } from 'models';
 import { createSelector } from 'reselect';
 
 export const usersSelector = createSelector(
-  rootSelector,
+  state => state,
   ({ users }) => users.list
 );
 
-export const currentUserSelector = createSelector(
-  rootSelector,
-  ({ users }) => users.current
+export const userSelector = createSelector(
+  state => state,
+  (_, id) => id,
+  ({ users }, id) => users.list.find(user => user.id === id)
 );
