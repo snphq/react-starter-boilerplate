@@ -10,8 +10,8 @@ const isDev = process.env.APP_ENV === 'development';
 module.exports = {
   context: path.resolve(process.cwd()),
   output: {
-    path: path.resolve(process.cwd(), 'public/assets'),
-    publicPath: '/assets/',
+    path: path.resolve(process.cwd(), 'public'),
+    publicPath: '/',
     filename: isDev ? '[name].js' : '[name].[chunkhash:8].js',
     chunkFilename: isDev ? '[name].chunk.js' : '[name].[chunkhash:8].chunk.js',
     pathinfo: false,
