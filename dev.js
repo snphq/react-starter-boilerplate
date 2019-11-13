@@ -8,4 +8,4 @@ require('./tools/hooks')();
 global.RUNTIME_ENV = 'server';
 
 /* Run server */
-require('./src/server');
+require('./src/server/dev');

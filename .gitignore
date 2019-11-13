@@ -6,4 +6,5 @@ node_modules
 public
 webpack-assets.json
 webpack-stats.json
+server-build.js
 .vscode
