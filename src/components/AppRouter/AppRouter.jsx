@@ -19,7 +19,7 @@ const Router = ({ routes }) => (
 );
 
 Router.propTypes = {
-  routes: PropTypes.array,
+  routes: PropTypes.array.isRequired,
 };
 
 export default Router;

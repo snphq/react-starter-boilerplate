@@ -4,19 +4,20 @@ import { fetchUsers as fetchUsersAction } from 'models/users/slice';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 
-import { usersSelector } from 'models/users/selectors';
+import { usersListSelector, isFetchingSelector } from 'models/users/selectors';
 
 import Users from './Users';
 
 const UsersContainer = () => {
   const onFetchUsers = useAction(fetchUsersAction.type);
-  const users = useSelector(usersSelector);
+  const users = useSelector(usersListSelector);
+  const fetching = useSelector(isFetchingSelector);
 
   useEffect(() => {
     onFetchUsers();
   }, [onFetchUsers]);
 
-  return <Users list={users} />;
+  return <Users list={users} fetching={fetching} />;
 };
 
 export default UsersContainer;

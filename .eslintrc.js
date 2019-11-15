@@ -43,7 +43,6 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'react/forbid-prop-types': 'off',
-    'react/require-default-props': 'off',
     'prettier/prettier': [
       'error',
       {

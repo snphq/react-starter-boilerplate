@@ -11,9 +11,11 @@ const usersSlice = createSlice({
   reducers: {
     fetchUser: state => {
       state.fetching = true;
+      state.list = [];
     },
     fetchUsers: state => {
       state.fetching = true;
+      state.list = [];
     },
     fetchUserSuccess(state, { payload }) {
       state.fetching = false;

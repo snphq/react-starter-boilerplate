@@ -31,7 +31,7 @@ const App = ({ routes }) => {
 };
 
 App.propTypes = {
-  routes: PropTypes.array,
+  routes: PropTypes.array.isRequired,
 };
 
 export default App;

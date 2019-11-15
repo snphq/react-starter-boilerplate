@@ -2,11 +2,21 @@ import { createSelector } from 'reselect';
 
 export const usersSelector = createSelector(
   state => state,
-  ({ users }) => users.list
+  state => state.users
+);
+
+export const isFetchingSelector = createSelector(
+  usersSelector,
+  ({ fetching }) => fetching
+);
+
+export const usersListSelector = createSelector(
+  usersSelector,
+  users => users.list
 );
 
 export const userSelector = createSelector(
-  state => state,
+  usersListSelector,
   (_, id) => id,
-  ({ users }, id) => users.list.find(user => user.id === id)
+  (list, id) => list.find(user => user.id === id)
 );
