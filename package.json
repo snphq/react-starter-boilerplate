@@ -29,70 +29,70 @@
   ],
   "license": "MIT",
   "scripts": {
-    "start": "yarn mock:manifest && yarn copy:favicon && better-npm-run start",
-    "start:spa": "yarn mock:manifest && yarn copy:favicon && better-npm-run start:spa",
-    "start:production": "yarn build:production && better-npm-run start:production",
-    "start:staging": "yarn build:staging && better-npm-run start:staging",
-    "start:static": "better-npm-run start:static",
-    "build:staging": "yarn clean:build && yarn copy:favicon && better-npm-run build:staging",
-    "build:spa:staging": "yarn build:staging && yarn render:index",
-    "build:production": "yarn clean:build && yarn copy:favicon && better-npm-run build:production",
-    "build:spa:production": "yarn build:production && yarn render:index",
+    "dev": "yarn mock:manifest && yarn copy:favicon && better-npm-run dev",
+    "dev:spa": "yarn mock:manifest && yarn copy:favicon && better-npm-run dev:spa",
+    "start:staging": "yarn build:assets:staging && yarn build:server:staging && yarn run:staging",
+    "start:production": "yarn build:assets:production && yarn build:server:production && yarn run:production",
+    "start:spa:staging": "yarn build:assets:staging && yarn render:index && yarn run:static",
+    "start:spa:production": "yarn build:assets:production && yarn render:index && yarn run:static",
+    "build:assets:staging": "yarn clean:build && yarn copy:favicon && better-npm-run build:staging",
+    "build:assets:production": "yarn clean:build && yarn copy:favicon && better-npm-run build:production",
+    "build:server:staging": "better-npm-run build:server:staging",
+    "build:server:production": "better-npm-run build:server:production",
+    "run:static": "better-npm-run run:static",
+    "run:staging": "better-npm-run run:staging",
+    "run:production": "better-npm-run run:production",
     "analyze": "yarn clean:build && better-npm-run analyze",
     "lint": "yarn lint:js && yarn lint:style",
-    "lint:js": "better-npm-run lint:js",
-    "lint:style": "better-npm-run lint:style",
-    "clean:build": "better-npm-run clean:build",
+    "lint:js": "eslint --fix ./src ./tools ./index.js",
+    "lint:style": "stylelint --fix \"./src/**/*.scss\"",
+    "clean:build": "rimraf ./public/*",
     "copy:favicon": "node ./tools/scripts/copy-favicon.js",
     "render:index": "node ./tools/scripts/render-index.js",
     "mock:manifest": "node ./tools/scripts/mock-manifest.js"
   },
   "betterScripts": {
-    "start": {
-      "command": "node ./index.js",
+    "dev": {
+      "command": "node ./dev.js",
       "env": {
         "APP_MODE": "ssr",
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
         "APP_ENV": "development",
-        "RUNTIME_ENV": "server",
         "PORT": 5000
       }
     },
-    "start:spa": {
-      "command": "node ./index.js",
+    "dev:spa": {
+      "command": "node ./dev.js",
       "env": {
         "APP_MODE": "spa",
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
         "APP_ENV": "development",
-        "RUNTIME_ENV": "server",
         "PORT": 5000
       }
     },
-    "start:staging": {
-      "command": "node ./index.js",
+    "run:staging": {
+      "command": "node ./server-build.js",
       "env": {
         "APP_MODE": "ssr",
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
-        "PORT": 8080,
         "APP_ENV": "staging",
-        "RUNTIME_ENV": "server"
+        "PORT": 8080
       }
     },
-    "start:production": {
-      "command": "node ./index.js",
+    "run:production": {
+      "command": "node ./server-build.js",
       "env": {
         "APP_MODE": "ssr",
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
-        "PORT": 8080,
-        "RUNTIME_ENV": "server",
-        "APP_ENV": "production"
+        "APP_ENV": "production",
+        "PORT": 8080
       }
     },
-    "start:static": {
+    "run:static": {
       "command": "node ./tools/static-server",
       "env": {
         "PORT": 8080
@@ -103,7 +103,7 @@
       "env": {
         "NODE_ENV": "production",
         "APP_ENV": "staging",
-        "RUNTIME_ENV": "server"
+        "TARGET_ENV": "web"
       }
     },
     "build:production": {
@@ -111,7 +111,25 @@
       "env": {
         "NODE_ENV": "production",
         "APP_ENV": "production",
-        "RUNTIME_ENV": "server"
+        "TARGET_ENV": "web"
+      }
+    },
+    "build:server:staging": {
+      "command": "webpack --progress --hide-modules --config ./webpack/server",
+      "env": {
+        "NODE_ENV": "production",
+        "APP_ENV": "staging",
+        "TARGET_ENV": "node",
+        "PORT": 8080
+      }
+    },
+    "build:server:production": {
+      "command": "webpack --progress --hide-modules --config ./webpack/server",
+      "env": {
+        "NODE_ENV": "production",
+        "APP_ENV": "production",
+        "TARGET_ENV": "node",
+        "PORT": 8080
       }
     },
     "analyze": {
@@ -119,15 +137,6 @@
       "env": {
         "NODE_ENV": "analyze"
       }
-    },
-    "lint:js": {
-      "command": "eslint --fix ./src ./tools ./index.js"
-    },
-    "lint:style": {
-      "command": "stylelint --fix \"./src/**/*.scss\""
-    },
-    "clean:build": {
-      "command": "rimraf ./public/*"
     }
   },
   "browserslist": [
@@ -146,6 +155,7 @@
     "helmet": "^3.12.0",
     "history": "^4.9.0",
     "hpp": "^0.2.2",
+    "html-minifier": "^4.0.0",
     "lodash": "^4.17.15",
     "mailgun-js": "^0.22.0",
     "memory-cache": "^0.2.0",
@@ -196,7 +206,6 @@
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^8.1.0",
-    "html-minifier": "^3.5.15",
     "imagemin-webpack-plugin": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",
     "opn": "^5.3.0",

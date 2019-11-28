@@ -1,32 +1,41 @@
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
+
+import Loading from 'components/Loading';
 
 import styles from './UserCard.scss';
 
-const UserCard = ({ name, phone, email, website }) => (
+const UserCard = ({ item, fetching }) => (
   <div className={styles.root}>
-    <h4>User Card</h4>
-    <ul>
-      <li>Name: {name}</li>
-      <li>Phone: {phone}</li>
-      <li>Email: {email}</li>
-      <li>Website: {website}</li>
-    </ul>
+    <Loading fetching={fetching} delay={1000}>
+      {() => (
+        <Fragment>
+          <h4>User Card</h4>
+          <ul>
+            <li>Name: {item.name}</li>
+            <li>Phone: {item.phone}</li>
+            <li>Email: {item.email}</li>
+            <li>Website: {item.website}</li>
+          </ul>
+        </Fragment>
+      )}
+    </Loading>
   </div>
 );
 
 UserCard.propTypes = {
-  name: PropTypes.string,
-  phone: PropTypes.string,
-  email: PropTypes.string,
-  website: PropTypes.string,
+  fetching: PropTypes.bool,
+  item: PropTypes.shape({
+    name: PropTypes.string,
+    phone: PropTypes.string,
+    email: PropTypes.string,
+    website: PropTypes.string,
+  }),
 };
 
 UserCard.defaultProps = {
-  name: '',
-  phone: '',
-  email: '',
-  website: '',
+  fetching: false,
+  item: null,
 };
 
 export default UserCard;
