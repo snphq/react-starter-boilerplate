@@ -7,24 +7,19 @@ import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _omit from 'lodash/omit';
 
-import routes from '../routes';
 import renderHtml from '../utils/renderHtml';
-import renderHead from '../utils/renderHead';
-import configureStore from '../store';
 import loadBranchData from './loadBranchData';
+
 import config from '../config';
+import routes from '../routes';
+import configureStore from '../store';
+import renderApp from '../utils/renderApp';
 
 /* eslint-disable import/extensions */
 import assets from '../../public/webpack-assets.json';
 /* eslint-disable import/extensions */
 
-const isSSR = process.env.APP_MODE === 'ssr';
 const isDev = process.env.APP_ENV === 'development';
-
-const renderApp =
-  process.env.APP_MODE === 'ssr'
-    ? require('../utils/renderApp').default
-    : () => '';
 
 export default async route => {
   const cache = memoryCache.get(route);
@@ -34,7 +29,7 @@ export default async route => {
     const store = configureStore(history, {});
     const branch = matchRoutes(routes, route);
 
-    if (!isDev && isSSR) {
+    if (!isDev) {
       await loadBranchData(store, branch);
     }
 
@@ -42,16 +37,20 @@ export default async route => {
 
     const htmlContent = renderApp(route, store, helmetContext);
 
-    const head = isSSR
-      ? {
-          htmlAttributes: helmetContext.helmet.htmlAttributes.toString(),
-          title: helmetContext.helmet.title.toString(),
-          base: helmetContext.helmet.base.toString(),
-          meta: helmetContext.helmet.meta.toString(),
-          link: helmetContext.helmet.link.toString(),
-          script: helmetContext.helmet.script.toString(),
-        }
-      : renderHead();
+    const head = [
+      'htmlAttributes',
+      'title',
+      'base',
+      'link',
+      'meta',
+      'script',
+    ].reduce(
+      (acc, attr) => ({
+        ...acc,
+        [attr]: helmetContext.helmet[attr].toString(),
+      }),
+      {}
+    );
 
     const html = renderHtml(
       head,

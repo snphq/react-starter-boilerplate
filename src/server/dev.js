@@ -1,5 +1,19 @@
-import server from './server';
-import webpackDev from './webpack-dev';
-import applyLogger from './applyLogger';
+require('@babel/register');
 
-server(process.env.PORT, webpackDev, applyLogger);
+global.RUNTIME_ENV = 'server';
+
+require('../../tools/hooks')();
+
+const server = require('./server').default;
+const webpackDev = require('./webpack-dev').default;
+const applyLogger = require('./logger').default;
+const applyMiddlewares = require('./middlewares').default;
+const applyRouter = require('./router').default;
+
+server(
+  process.env.PORT,
+  webpackDev,
+  applyLogger,
+  applyMiddlewares,
+  applyRouter
+);

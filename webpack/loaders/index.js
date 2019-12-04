@@ -19,12 +19,19 @@ module.exports = [
   {
     test: /\.(woff2?|ttf|eot)$/,
     loader: 'file',
-    options: { name: '[name].[hash:8].[ext]' },
+    options: {
+      name: '[name].[hash:8].[ext]',
+      emitFile: process.env.TARGET_ENV !== 'node',
+    },
   },
   {
     test: /\.(gif|png|svg|jpe?g|webp)$/,
-    loader: 'url',
-    options: { limit: 10240, name: '[name].[hash:8].[ext]' },
+    loader: 'file',
+    options: {
+      limit: 10240,
+      name: '[name].[hash:8].[ext]',
+      emitFile: process.env.TARGET_ENV !== 'node',
+    },
   },
   ...styles,
 ];
