@@ -49,7 +49,8 @@
     "clean:build": "rimraf ./public/*",
     "copy:favicon": "node ./tools/scripts/copy-favicon.js",
     "render:index": "node ./tools/scripts/render-index.js",
-    "dev:manifest": "node ./tools/scripts/dev-manifest.js"
+    "dev:manifest": "node ./tools/scripts/dev-manifest.js",
+    "styleguide": "styleguidist server"
   },
   "betterScripts": {
     "dev": {
