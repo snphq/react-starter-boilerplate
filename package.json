@@ -29,8 +29,8 @@
   ],
   "license": "MIT",
   "scripts": {
-    "dev": "yarn mock:manifest && yarn copy:favicon && better-npm-run dev",
-    "dev:spa": "yarn mock:manifest && yarn copy:favicon && better-npm-run dev:spa",
+    "dev": "yarn clean:build && yarn dev:manifest && yarn copy:favicon && better-npm-run dev",
+    "dev:spa": "yarn clean:build && yarn dev:manifest && yarn copy:favicon && yarn render:index && better-npm-run dev:spa",
     "start:staging": "yarn build:assets:staging && yarn build:server:staging && yarn run:staging",
     "start:production": "yarn build:assets:production && yarn build:server:production && yarn run:production",
     "start:spa:staging": "yarn build:assets:staging && yarn render:index && yarn run:static",
@@ -49,11 +49,11 @@
     "clean:build": "rimraf ./public/*",
     "copy:favicon": "node ./tools/scripts/copy-favicon.js",
     "render:index": "node ./tools/scripts/render-index.js",
-    "mock:manifest": "node ./tools/scripts/mock-manifest.js"
+    "dev:manifest": "node ./tools/scripts/dev-manifest.js"
   },
   "betterScripts": {
     "dev": {
-      "command": "node ./dev.js",
+      "command": "node ./src/server/dev.js",
       "env": {
         "APP_MODE": "ssr",
         "NODE_PATH": "./src",
@@ -63,7 +63,7 @@
       }
     },
     "dev:spa": {
-      "command": "node ./dev.js",
+      "command": "node ./src/server/dev-spa.js",
       "env": {
         "APP_MODE": "spa",
         "NODE_PATH": "./src",

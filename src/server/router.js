@@ -1,10 +1,11 @@
 import chalk from 'chalk';
 import multer from 'multer';
 
-import routes from '../routes';
 import render from './render';
 import sendMail from './mailer';
+
 import config from '../config';
+import routes from '../routes';
 
 const formiddable = multer({});
 

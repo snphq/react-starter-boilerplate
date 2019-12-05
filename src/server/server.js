@@ -1,16 +1,10 @@
 import express from 'express';
 import chalk from 'chalk';
 
-import applyMiddlewares from './applyMiddlewares';
-import applyRouter from './applyRouter';
-
-export default (port, ...devMiddlewares) => {
+export default (port, ...middlewares) => {
   const app = express();
 
-  devMiddlewares.forEach(middleware => middleware(app));
-
-  applyMiddlewares(app);
-  applyRouter(app);
+  middlewares.forEach(middleware => middleware(app));
 
   if (port) {
     app.listen(port, err => {
