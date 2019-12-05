@@ -4,13 +4,18 @@ module.exports = {
       '@babel/preset-env',
       {
         useBuiltIns: 'usage',
-        corejs: 2,
+        corejs: 3,
       },
     ],
     '@babel/preset-react',
   ],
   plugins: [
-    '@babel/plugin-transform-runtime',
+    [
+      '@babel/plugin-transform-runtime',
+      {
+        corejs: 3,
+      },
+    ],
     [
       '@babel/plugin-proposal-decorators',
       {
