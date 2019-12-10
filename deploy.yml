@@ -1,0 +1,100 @@
+#
+# Playbook for deploy simple frontend project
+#
+# exra-vars:
+# project - project name
+# tarballs - tarballs count (old releases)
+
+- hosts: all
+  user: "{{ project }}"
+
+  vars:
+    projectName: "{{ project }}"
+    user: "{{ project }}"
+    type: "{{ build_type }}"
+
+  tasks:
+    - name: Set username
+      set_fact:
+        remote_user: "{{ user }}"
+
+    - name: Copy SSR build to prod directory
+      synchronize:
+        src: ./
+        dest: /var/www/{{ projectName }}/cs/releases/{{ansible_date_time.date}}-{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}}
+        rsync_opts:
+          - "--exclude=node_modules"
+          - "--exclude=.git"
+          - "--exclude=deploy.yml"
+          - "--exclude=.gitlab-ci.yml"
+      when: type == 'ssr'
+
+    - name: Copy static build to prod directory
+      synchronize:
+        src: ./dist/
+        dest: /var/www/{{ projectName }}/cs/releases/{{ansible_date_time.date}}-{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}}
+        rsync_opts:
+          - "--exclude=node_modules"
+          - "--exclude=.git"
+          - "--exclude=deploy.yml"
+          - "--exclude=.gitlab-ci.yml"
+      when: type == 'static'
+
+    - name: Save last deployed release path
+      shell: basename $(readlink -f "/var/www/{{ projectName }}/cs/current")
+      register: lastReleaseName
+
+    - name: Remove old symlink
+      command: rm -f /var/www/{{ projectName }}/cs/current
+
+    - name: Make symlink for new prod
+      command: ln -s /var/www/{{ projectName }}/cs/releases/{{ansible_date_time.date}}-{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}} /var/www/{{ projectName }}/cs/current
+
+    - name: Kill old application
+      shell: pm2 delete -s {{ projectName }}
+      environment:
+        PATH: /home/{{ projectName }}/.nvm/versions/default/bin
+      register: command_result
+      failed_when: "'ERROR' in command_result.stderr"
+      when: type == 'ssr'
+
+    - name: Run new deployed application
+      shell: |
+        cd /var/www/{{ projectName }}/cs/current
+        yarn
+        npm rebuild node-sass
+        ln -s /var/www/{{ projectName }}/cs/shared/config.json /var/www/{{ projectName }}/cs/current/src/server/config.json
+        NODE_PATH=./src NODE_ENV=production API_MODE=staging PORT=3000 pm2 start ./index.js -n {{ projectName }}
+      ignore_errors: yes 
+      args:
+        executable: /bin/bash
+      environment:
+        PATH: '$PATH:/home/{{ projectName }}/.nvm/versions/default/bin'
+      when: type == 'ssr'
+
+      register: run_result
+
+    # Archive old release version and save state    
+    - archive:
+        path: /var/www/{{ projectName }}/cs/releases/{{ lastReleaseName.stdout }}
+        dest: /var/www/{{ projectName }}/cs/releases/{{ lastReleaseName.stdout }}.tar.gz 
+      register: tarballCreatingState
+
+    - name: Clean old release path
+      file:
+        state: absent
+        path: "/var/www/{{ projectName }}/cs/releases/{{ lastReleaseName.stdout }}"
+      register: deleteResult
+      when: tarballCreatingState.failed == false
+
+    - name: Get count of exist backups
+      shell: ls /var/www/{{ projectName }}/cs/releases/*.tar.gz | wc -l
+      register: existBackupsCount
+
+    - name: Calculate count of backups to delete
+      shell: ls -trd -1 /var/www/{{ projectName }}/cs/releases/*.tar.gz | head -{{ backupCountForRemove }} | xargs rm
+      vars:
+        backupCountForRemove: "{{ existBackupsCount.stdout|int - 3 }}"
+      register: backupsForDelete
+      when: existBackupsCount.stdout|int > 3
+
