@@ -4,6 +4,7 @@ module.exports = {
   plugins: ['react', 'react-hooks', 'prettier'],
   settings: {
     'import/resolver': {
+      node: {},
       webpack: {
         config: './webpack',
       },
