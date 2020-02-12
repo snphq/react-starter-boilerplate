@@ -1,0 +1,18 @@
+module.exports = [
+  'axios',
+  'bowser',
+  'connected-react-router',
+  'history',
+  'lodash',
+  'prop-types',
+  'react',
+  'react-dom',
+  'react-helmet-async',
+  'react-redux',
+  'react-router-config',
+  'react-router-dom',
+  'redux',
+  'redux-saga',
+  'redux-starter-kit',
+  'reselect',
+];

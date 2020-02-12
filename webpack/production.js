@@ -4,13 +4,14 @@ const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const common = require('./common.js');
-
-module.exports = merge(common, {
+module.exports = merge(require('./common'), {
   mode: 'production',
   devtool: 'hidden-source-map',
   cache: false,
-  entry: path.resolve(process.cwd(), 'src/client'),
+  entry: {
+    main: path.resolve(process.cwd(), 'src/client'),
+    vendors: require('./vendors'),
+  },
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new CompressionPlugin({
