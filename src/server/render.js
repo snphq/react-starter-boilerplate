@@ -7,7 +7,7 @@ import _isNil from 'lodash/isNil';
 import _isEmpty from 'lodash/isEmpty';
 import _omit from 'lodash/omit';
 
-import renderHtml from '../utils/renderHtml';
+import { renderHtmlStart, renderHtmlEnd } from '../utils/renderHtml';
 import loadBranchData from './loadBranchData';
 
 import config from '../config';
@@ -52,7 +52,12 @@ export default async route => {
       {}
     );
 
-    const html = renderHtml(
+    const htmlStart = renderHtmlStart(
+      head,
+      isDev ? { js: '/main.js' } : assets
+    );
+
+    const htmlEnd = renderHtmlEnd(
       head,
       isDev ? { js: '/main.js' } : assets,
       /* do not include rendered string to html in development mode to allow hmr */
@@ -60,6 +65,8 @@ export default async route => {
       /* omit redux router part from the initial state */
       _omit(store.getState(), 'router')
     );
+
+    const html = `${htmlStart}${htmlEnd}`;
 
     if (!_isEmpty(branch) && branch[0].route.cache) {
       memoryCache.put(route, html);
