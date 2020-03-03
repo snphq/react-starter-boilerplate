@@ -7,7 +7,7 @@ module.exports = [
   'prop-types',
   'react',
   'react-dom',
-  'react-helmet-async',
+  'react-helmet',
   'react-redux',
   'react-router-config',
   'react-router-dom',

@@ -1,45 +1,42 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import useRendered from 'hooks/useRendered';
-
-const Loading = ({ fetching, delay, children }) => {
-  const rendered = useRendered();
-  const [showContent, setShowContent] = useState(false);
+const Loading = ({ active, children, loader: Loader, disabled }) => {
+  const renderedRef = useRef(false);
 
   useEffect(() => {
-    if (rendered && !fetching) {
-      if (delay) {
-        setTimeout(() => {
-          setShowContent(true);
-        }, delay);
-      } else {
-        setShowContent(true);
-      }
-    }
-  }, [delay, fetching, rendered]);
+    renderedRef.current = true;
+  }, []);
 
   const renderChildren = useCallback(
     () => (typeof children === 'function' ? children() : children),
     [children]
   );
 
-  return showContent ? renderChildren() : <div>... Loading</div>;
+  return RUNTIME_ENV === 'server' ||
+    disabled ||
+    (renderedRef.current && !active) ? (
+    renderChildren()
+  ) : (
+    <Loader />
+  );
 };
 
 Loading.propTypes = {
-  delay: PropTypes.number,
+  disabled: PropTypes.bool,
+  loader: PropTypes.elementType,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
     PropTypes.func,
   ]).isRequired,
-  fetching: PropTypes.bool,
+  active: PropTypes.bool,
 };
 
 Loading.defaultProps = {
-  fetching: false,
-  delay: 0,
+  disabled: false,
+  active: false,
+  loader: () => '...Loading',
 };
 
 export default Loading;

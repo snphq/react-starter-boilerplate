@@ -53,7 +53,7 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "node ./src/server/dev.js",
+      "command": "node --inspect ./src/server/dev.js",
       "env": {
         "APP_MODE": "ssr",
         "NODE_PATH": "./src",
@@ -164,7 +164,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-helmet-async": "^1.0.2",
+    "react-helmet": "^5.2.1",
     "react-redux": "^7.1.0",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.1.2",

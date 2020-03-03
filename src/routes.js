@@ -10,11 +10,13 @@ export default [
     cache: false,
     component: Home,
     sagasToRun: [fetchUsers],
+    title: 'Home',
   },
   {
     path: '/users/:id',
     cache: false,
     component: UserInfo,
     sagasToRun: [[fetchUser, ({ id }) => ({ payload: { id } })]],
+    title: 'User',
   },
 ];

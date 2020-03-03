@@ -1,17 +1,22 @@
-import Req, { externalRequest } from './request';
+import Req from './request';
+
+import users from 'stubs/users';
 
 export const fetchUsers = () =>
   Req.GET({
     url: '/users',
+    stubData: users,
   });
 
-export const fetchUser = id =>
-  Req.GET({
-    url: `/user/${id}`,
-  });
+export const fetchUser = id => {
+  const userItem = users.find(user => user.id === Number(id));
 
-export const fetchUserExternal = id =>
-  externalRequest(`https://jsonplaceholder.typicode.com/users/${id}`, {});
+  if (userItem) {
+    return Req.GET({
+      url: `/users/${id}`,
+      stubData: userItem,
+    });
+  }
 
-export const fetchUsersExternal = () =>
-  externalRequest('https://jsonplaceholder.typicode.com/users', {});
+  return Promise.reject(new Error('Not found'));
+};

@@ -1,6 +1,6 @@
 import { takeLatest, all, put, call } from 'redux-saga/effects';
 
-import { fetchUsersExternal, fetchUserExternal } from 'api';
+import * as api from 'api';
 
 import {
   fetchUsers as fetchUsersAction,
@@ -11,7 +11,7 @@ import {
 
 export function* fetchUsers() {
   try {
-    const response = yield call(fetchUsersExternal);
+    const response = yield call(api.fetchUsers);
     yield put({
       type: fetchUsersSuccessAction.type,
       payload: { users: response.data },
@@ -23,7 +23,7 @@ export function* fetchUsers() {
 
 export function* fetchUser({ payload }) {
   try {
-    const response = yield call(fetchUserExternal, payload.id);
+    const response = yield call(api.fetchUser, payload.id);
     yield put({
       type: fetchUserSuccessAction.type,
       payload: { user: response.data },

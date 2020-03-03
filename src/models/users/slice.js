@@ -2,28 +2,30 @@
 
 import { createSlice } from 'redux-starter-kit';
 
+import { normalize } from 'utils/normalizeById';
+
 const usersSlice = createSlice({
   name: 'users',
   initialState: {
-    list: [],
-    fetching: false,
+    collection: {},
+    fetching: true,
+    collectionFetched: false,
   },
   reducers: {
     fetchUser: state => {
       state.fetching = true;
-      state.list = [];
     },
     fetchUsers: state => {
       state.fetching = true;
-      state.list = [];
     },
     fetchUserSuccess(state, { payload }) {
       state.fetching = false;
-      state.list = [payload.user];
+      state.collection[payload.user.id] = { ...payload.user, fetched: true };
     },
     fetchUsersSuccess(state, { payload }) {
       state.fetching = false;
-      state.list = payload.users;
+      state.collectionFetched = true;
+      state.collection = normalize(payload.users);
     },
   },
 });

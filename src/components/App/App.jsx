@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet-async';
+/* import { Helmet } from 'react-helmet'; */
 
 import config from 'config';
 
@@ -19,7 +19,8 @@ const App = ({ routes }) => {
 
   return (
     <div className={styles.app}>
-      <Helmet {...config.app} />
+      {/* Use Helmet only in SPA mode. Render app head on server side  */}
+      {/* <Helmet {...config.app} /> */}
       <div className={styles.header}>
         <img src={logo} alt="logo" role="presentation" />
         <h1>{config.app.title}</h1>

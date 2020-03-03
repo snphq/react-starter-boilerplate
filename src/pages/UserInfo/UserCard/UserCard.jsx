@@ -5,9 +5,9 @@ import Loading from 'components/Loading';
 
 import styles from './UserCard.scss';
 
-const UserCard = ({ item, fetching }) => (
+const UserCard = ({ item, fetching, fetched }) => (
   <div className={styles.root}>
-    <Loading fetching={fetching} delay={1000}>
+    <Loading active={fetching} disabled={fetched}>
       {() => (
         <Fragment>
           <h4>User Card</h4>
@@ -24,6 +24,7 @@ const UserCard = ({ item, fetching }) => (
 );
 
 UserCard.propTypes = {
+  fetched: PropTypes.bool,
   fetching: PropTypes.bool,
   item: PropTypes.shape({
     name: PropTypes.string,
@@ -34,6 +35,7 @@ UserCard.propTypes = {
 };
 
 UserCard.defaultProps = {
+  fetched: false,
   fetching: false,
   item: null,
 };

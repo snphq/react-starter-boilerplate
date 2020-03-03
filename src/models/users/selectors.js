@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import { denormalize } from 'utils/normalizeById';
+
 export const usersSelector = createSelector(
   state => state,
   state => state.users
@@ -10,13 +12,18 @@ export const isFetchingSelector = createSelector(
   ({ fetching }) => fetching
 );
 
-export const usersListSelector = createSelector(
+export const isCollectionFetchedSelector = createSelector(
   usersSelector,
-  users => users.list
+  ({ collectionFetched }) => collectionFetched
 );
 
-export const userSelector = createSelector(
-  usersListSelector,
+export const collectionSelector = createSelector(
+  usersSelector,
+  users => denormalize(users.collection)
+);
+
+export const itemSelector = createSelector(
+  usersSelector,
   (_, id) => id,
-  (list, id) => list.find(user => user.id === id)
+  ({ collection }, id) => collection[id] || { fetched: false }
 );

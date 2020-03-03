@@ -6,12 +6,11 @@ export const renderHtmlStart = (head, assets) =>
       <head>
         <meta charset="utf-8">
         <!--[if IE]>
-          <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
         <![endif]-->
         ${head.meta}
 
         ${head.link}
-        ${head.base}
 
         ${head.title}
 
@@ -29,8 +28,7 @@ export const renderHtmlStart = (head, assets) =>
         <!-- Insert the router, which passed from server-side -->
         <div id="react-view">`;
 
-export const renderHtmlEnd = (head, assets, htmlContent, initialState) => `
-    ${htmlContent}
+export const renderHtmlEnd = (assets, initialState) => `
   </div>
     <!-- Store the initial state into window -->
     <script>
@@ -47,15 +45,13 @@ export const renderHtmlEnd = (head, assets, htmlContent, initialState) => `
           : ''
       )
       .join('')}
-
-    ${head.script}
   </body>
 </html>`;
 
-export default (head, assets, htmlContent, initialState) =>
-  `${renderHtmlStart(head, assets)}${renderHtmlEnd(
-    head,
+export default (head, assets, htmlContent, initialState) => {
+  return `${renderHtmlStart(head, assets)}${htmlContent}${renderHtmlEnd(
     assets,
     htmlContent,
     initialState
   )}`;
+};

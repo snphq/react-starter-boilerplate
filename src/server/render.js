@@ -1,79 +1,102 @@
 import memoryCache from 'memory-cache';
-import { matchRoutes } from 'react-router-config';
+import chalk from 'chalk';
 import { createMemoryHistory } from 'history';
 import { minify } from 'html-minifier';
+import { Readable } from 'stream';
 
-import _isNil from 'lodash/isNil';
-import _isEmpty from 'lodash/isEmpty';
 import _omit from 'lodash/omit';
 
+import renderHead from '../utils/renderHead';
 import { renderHtmlStart, renderHtmlEnd } from '../utils/renderHtml';
 import loadBranchData from './loadBranchData';
 
 import config from '../config';
 import routes from '../routes';
 import configureStore from '../store';
-import renderApp from '../utils/renderApp';
+import matchRoutes from 'utils/matchRoutes';
+import * as render from '../utils/renderRootComponent';
 
-/* eslint-disable import/extensions */
+/* eslint-disable impot/extensions */
 import assets from '../../public/webpack-assets.json';
 /* eslint-disable import/extensions */
 
 const isDev = process.env.APP_ENV === 'development';
 
-export default async route => {
-  const cache = memoryCache.get(route);
+const handleRenderError = (res, error) => {
+  res.end('Internal server error');
 
-  if (_isNil(cache)) {
-    const history = createMemoryHistory();
-    const store = configureStore(history, {});
-    const branch = matchRoutes(routes, route);
+  if (process.env.APP_ENV === 'development') {
+    console.error(chalk.red('==> 😭 Internal server error'));
+    console.error(error);
+  }
+};
 
-    if (!isDev) {
-      await loadBranchData(store, branch);
-    }
+const sendAppStream = (res, route, store, cache) => {
+  const appContentStream = isDev
+    ? Readable.from([''])
+    : render.toStream(store, route);
 
-    const helmetContext = {};
+  appContentStream.on('error', error => {
+    handleRenderError(res, error);
+  });
 
-    const htmlContent = renderApp(route, store, helmetContext);
+  appContentStream.pipe(
+    res,
+    { end: false }
+  );
 
-    const head = [
-      'htmlAttributes',
-      'title',
-      'base',
-      'link',
-      'meta',
-      'script',
-    ].reduce(
-      (acc, attr) => ({
-        ...acc,
-        [attr]: helmetContext.helmet[attr].toString(),
-      }),
-      {}
-    );
-
-    const htmlStart = renderHtmlStart(
-      head,
-      isDev ? { js: '/main.js' } : assets
-    );
-
+  appContentStream.on('end', () => {
     const htmlEnd = renderHtmlEnd(
-      head,
       isDev ? { js: '/main.js' } : assets,
-      /* do not include rendered string to html in development mode to allow hmr */
-      isDev ? '' : htmlContent,
       /* omit redux router part from the initial state */
       _omit(store.getState(), 'router')
     );
 
-    const html = `${htmlStart}${htmlEnd}`;
+    res.write(htmlEnd);
+    res.end();
 
-    if (!_isEmpty(branch) && branch[0].route.cache) {
-      memoryCache.put(route, html);
+    if (cache) {
+      const html = `${res.__HTML_START__}${render.toString(
+        store,
+        route
+      )}${htmlEnd}`;
+
+      memoryCache.put(route, minify(html, config.htmlMinifier));
     }
+  });
+};
 
-    return Promise.resolve(isDev ? html : minify(html, config.htmlMinifier));
+export default (route, res) => {
+  try {
+    const cachedHtml = memoryCache.get(route);
+
+    if (cachedHtml === null || cachedHtml === undefined) {
+      const history = createMemoryHistory();
+      const store = configureStore(history, {});
+      const branch = matchRoutes(routes, route);
+
+      const { sagasToRun, title, cache } = branch.route;
+      const { params } = branch.match;
+
+      const head = renderHead(title);
+
+      const htmlStart = renderHtmlStart(head, assets);
+
+      res.set('Content-Type', 'text/html; charset=utf-8');
+      res.__HTML_START__ = htmlStart;
+      res.write(htmlStart);
+
+      if (sagasToRun && sagasToRun.length > 0) {
+        loadBranchData(store, sagasToRun, params)
+          .then(() => sendAppStream(res, route, store, cache))
+          .catch(error => handleRenderError(res, error));
+      } else {
+        sendAppStream(res, route, store, cache);
+      }
+    } else {
+      res.send(cachedHtml);
+    }
+  } catch (error) {
+    handleRenderError(res, error);
   }
-
-  return Promise.resolve(memoryCache.get(route));
 };

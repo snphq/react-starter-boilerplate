@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { fetchUser as fetchUserAction } from 'models/users/slice';
-import { userSelector, isFetchingSelector } from 'models/users/selectors';
+import { itemSelector, isFetchingSelector } from 'models/users/selectors';
 
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
@@ -14,14 +14,16 @@ const UserСardContainer = () => {
   const userId = Number(params.id);
 
   const onFetchUser = useAction(fetchUserAction.type);
-  const user = useSelector(userSelector, userId);
+  const user = useSelector(itemSelector, userId);
   const fetching = useSelector(isFetchingSelector);
 
   useEffect(() => {
-    onFetchUser({ id: userId });
-  }, [onFetchUser, userId]);
+    if (!user.fetched) {
+      onFetchUser({ id: userId });
+    }
+  }, [onFetchUser, userId, user]);
 
-  return <UserCard item={user} fetching={fetching} />;
+  return <UserCard item={user} fetching={fetching} fetched={user.fetched} />;
 };
 
 export default UserСardContainer;

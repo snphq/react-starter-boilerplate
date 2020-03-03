@@ -11,4 +11,5 @@ module.exports = {
   components: path.resolve(process.cwd(), 'src/components'),
   styles: path.resolve(process.cwd(), 'src/styles'),
   images: path.resolve(process.cwd(), 'src/assets/images'),
+  stubs: path.resolve(process.cwd(), 'src/stubs'),
 };
