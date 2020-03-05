@@ -4,10 +4,16 @@ export const renderHtmlStart = (head, assets) =>
   `<!doctype html>
     <html ${head.htmlAttributes}>
       <head>
+        <noscript>Javascript is disabled!</noscript>
         <meta charset="utf-8">
         <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
         <![endif]-->
+
+        <link rel="manifest" href="/manifest.json">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <meta name="theme-color" content="#317EFB"/>
+
         ${head.meta}
 
         ${head.link}
@@ -22,7 +28,6 @@ export const renderHtmlStart = (head, assets) =>
               : ''
           )
           .join('')}
-
       </head>
       <body>
         <!-- Insert the router, which passed from server-side -->

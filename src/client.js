@@ -41,4 +41,17 @@ if (module.hot) {
   module.hot.accept();
 }
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/offline.sw.js').then(
+      () => {
+        console.info('Offline service worker successfully installed');
+      },
+      error => {
+        console.error('ServiceWorker registration failed: ', error);
+      }
+    );
+  });
+}
+
 renderApp();
