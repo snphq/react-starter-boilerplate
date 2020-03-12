@@ -10,7 +10,7 @@ const Users = ({ list, fetching }) => (
       'Loading...'
     ) : (
       <Fragment>
-        <h3>Users - 3213231</h3>
+        <h3>Users</h3>
         <ul>
           {list.map(user => (
             <li key={user.id}>
