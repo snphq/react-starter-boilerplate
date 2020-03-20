@@ -233,6 +233,7 @@
   },
   "resolutions": {
     "webpack-sources": "^1.1.0",
-    "core-js": "^2.4.0"
+    "core-js": "^2.4.0",
+    "react-is": "^16.8.1"
   }
 }
