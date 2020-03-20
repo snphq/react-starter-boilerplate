@@ -8,21 +8,24 @@ module.exports = merge(require('./common'), {
   mode: 'production',
   devtool: 'hidden-source-map',
   cache: false,
-  entry: {
-    main: path.resolve(process.cwd(), 'src/client'),
-    vendors: require('./vendors'),
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: process.env.APP_ENV !== 'development',
+    },
   },
+  entry: path.resolve(process.cwd(), 'src/client'),
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new CompressionPlugin({
-      asset: '[path].gz[query]',
+      filename: '[path].gz[query]',
       algorithm: 'gzip',
       test: /\.jsx?$|\.css$|\.(scss|sass)$|\.html$/,
       threshold: 10240,
       minRatio: 0.8,
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: process.env.NODE_ENV === 'analyze' ? 'server' : 'disabled',
+      analyzerMode: process.env.ANALYZE ? 'server' : 'disabled',
     }),
   ],
 });
