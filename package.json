@@ -151,7 +151,6 @@
     "compression": "^1.7.2",
     "connected-react-router": "^6.3.1",
     "express": "^4.16.3",
-    "express-formidable": "^1.2.0",
     "helmet": "^3.12.0",
     "history": "^4.9.0",
     "hpp": "^0.2.2",
