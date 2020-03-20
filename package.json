@@ -4,7 +4,7 @@
   "description": "A starter boilerplate for an universal web application with the best development experience and best practices.",
   "main": "index.js",
   "engines": {
-    "node": ">=6.0",
+    "node": ">=12.3",
     "npm": ">=3.0"
   },
   "repository": {
