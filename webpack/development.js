@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const WebpackNotifierPlugin = require('webpack-notifier');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const path = require('path');
 const common = require('./common.js');
 
@@ -13,6 +14,7 @@ module.exports = merge(common, {
   ],
   cache: true,
   plugins: [
+    new HardSourceWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackNotifierPlugin({
       excludeWarnings: true,
