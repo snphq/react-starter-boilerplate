@@ -2,6 +2,8 @@
 
 import { createSlice } from 'redux-starter-kit';
 
+import actionTypes from 'utils/actionTypes';
+
 import { normalize } from 'utils/normalizeById';
 
 const usersSlice = createSlice({
@@ -30,11 +32,6 @@ const usersSlice = createSlice({
   },
 });
 
-export const {
-  fetchUsers,
-  fetchUsersSuccess,
-  fetchUser,
-  fetchUserSuccess,
-} = usersSlice.actions;
+export const actions = actionTypes(usersSlice.actions);
 
 export default usersSlice.reducer;
