@@ -64,7 +64,7 @@
         yarn
         npm rebuild node-sass
         ln -s /var/www/{{ projectName }}/cs/shared/config.json /var/www/{{ projectName }}/cs/current/src/server/config.json
-        NODE_PATH=./src NODE_ENV=production API_MODE=staging PORT=3000 pm2 start ./index.js -n {{ projectName }}
+        NODE_PATH=./src NODE_ENV=production APP_ENV=staging PORT=3000 pm2 start ./index.js -n {{ projectName }}
       ignore_errors: yes 
       args:
         executable: /bin/bash
