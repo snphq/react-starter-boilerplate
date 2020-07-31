@@ -1,4 +1,4 @@
-image: jessie-node10-ansible:latest
+image: jessie-node12-ansible:latest
 
 stages:
   - deploy
@@ -10,10 +10,11 @@ before_script:
 deploy:
   stage: deploy
   script:
-    - npm install
-    - npm run dist
+    - yarn
+    - npm run build:assets:staging
+    - npm run build:server:staging
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - export PROJECT_NAME=`echo $CI_PROJECT_NAME | awk -F'-' 'sub(FS $NF,x)'`
-    - ansible-playbook ./deploy.yml -i $PROJECT_NAME-direct.snpdev.ru, --extra-vars="project=$PROJECT_NAME" --extra-vars="build_type=static"
+    - ansible-playbook -v ./deploy.yml -i $PROJECT_NAME-direct.snpdev.ru, --extra-vars="project=$PROJECT_NAME" --extra-vars="build_type=ssr" --extra-vars="app_env=staging"
   only:
     - testing
