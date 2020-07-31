@@ -12,6 +12,7 @@
     projectName: "{{ project }}"
     user: "{{ project }}"
     type: "{{ build_type }}"
+    app_env: "{{ app_env }}"
 
   tasks:
     - name: Set username
@@ -51,25 +52,29 @@
       command: ln -s /var/www/{{ projectName }}/cs/releases/{{ansible_date_time.date}}-{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}} /var/www/{{ projectName }}/cs/current
 
     - name: Kill old application
-      shell: pm2 delete -s {{ projectName }}
-      environment:
-        PATH: /home/{{ projectName }}/.nvm/versions/default/bin
+      shell: |
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+        pm2 delete -s {{ projectName }}
       register: command_result
       failed_when: "'ERROR' in command_result.stderr"
       when: type == 'ssr'
 
     - name: Run new deployed application
       shell: |
+        . ~/.nvm/nvm.sh
+        . ~/.profile
         cd /var/www/{{ projectName }}/cs/current
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
         yarn
         npm rebuild node-sass
-        ln -s /var/www/{{ projectName }}/cs/shared/config.json /var/www/{{ projectName }}/cs/current/src/server/config.json
-        NODE_PATH=./src NODE_ENV=production API_MODE=staging PORT=3000 pm2 start ./index.js -n {{ projectName }}
+        NODE_PATH=./src NODE_ENV=production APP_ENV={{ app_env }} PORT=3000 pm2 start ./server-build.js -n {{ projectName }}
       ignore_errors: yes 
       args:
         executable: /bin/bash
-      environment:
-        PATH: '$PATH:/home/{{ projectName }}/.nvm/versions/default/bin'
       when: type == 'ssr'
 
       register: run_result
@@ -97,4 +102,3 @@
         backupCountForRemove: "{{ existBackupsCount.stdout|int - 3 }}"
       register: backupsForDelete
       when: existBackupsCount.stdout|int > 3
-
