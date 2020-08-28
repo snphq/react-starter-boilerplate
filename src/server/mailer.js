@@ -4,7 +4,7 @@ import util from 'util';
 import config from '../config';
 
 const mailer = mailgun({
-  apiKey: process.env.MAILGUN_API_KEY,
+  apiKey: process.env.MAILGUN_API_KEY || 'api_key',
   domain: config.mailer.domain,
 });
 
