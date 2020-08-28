@@ -1,5 +1,5 @@
-const production = require('./production');
-const staging = require('./staging');
+const production = require('./production').default;
+const staging = require('./staging').default;
 
 const configs = {
   production,
