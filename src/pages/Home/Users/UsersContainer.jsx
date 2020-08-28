@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { fetchUsers as fetchUsersAction } from 'models/users/slice';
+import { actions } from 'models/users/slice';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 
@@ -13,7 +13,7 @@ import {
 import Users from './Users';
 
 const UsersContainer = () => {
-  const onFetchUsers = useAction(fetchUsersAction.type);
+  const onFetchUsers = useAction(actions.fetchUsers);
   const users = useSelector(collectionSelector);
   const fetching = useSelector(isFetchingSelector);
   const collectionFetched = useSelector(isCollectionFetchedSelector);

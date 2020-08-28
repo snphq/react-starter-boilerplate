@@ -4,7 +4,7 @@
   "description": "A starter boilerplate for an universal web application with the best development experience and best practices.",
   "main": "index.js",
   "engines": {
-    "node": ">=6.0",
+    "node": ">=12.3",
     "npm": ">=3.0"
   },
   "repository": {
@@ -13,7 +13,7 @@
   },
   "keywords": [
     "starter",
-    "boilerpate",
+    "boilerplate",
     "universal",
     "react",
     "redux",
@@ -53,7 +53,7 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "node --inspect ./src/server/dev.js",
+      "command": "node ./src/server/dev.js",
       "env": {
         "APP_MODE": "ssr",
         "NODE_PATH": "./src",
@@ -154,7 +154,6 @@
     "compression": "^1.7.2",
     "connected-react-router": "^6.3.1",
     "express": "^4.16.3",
-    "express-formidable": "^1.2.0",
     "helmet": "^3.12.0",
     "history": "^4.9.0",
     "hpp": "^0.2.2",
@@ -210,6 +209,7 @@
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^8.1.0",
+    "hard-source-webpack-plugin": "^0.13.1",
     "imagemin-webpack-plugin": "^2.1.1",
     "mini-css-extract-plugin": "^0.5.0",
     "opn": "^5.3.0",
