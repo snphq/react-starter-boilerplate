@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { actions } from 'models/users/slice';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
+import useComponentDidMount from 'hooks/useComponentDidMount';
 
 import {
   collectionSelector,
@@ -18,11 +19,11 @@ const UsersContainer = () => {
   const fetching = useSelector(isFetchingSelector);
   const collectionFetched = useSelector(isCollectionFetchedSelector);
 
-  useEffect(() => {
+  useComponentDidMount(() => {
     if (!collectionFetched) {
       onFetchUsers();
     }
-  }, [onFetchUsers, collectionFetched]);
+  });
 
   return <Users list={users} fetching={fetching} />;
 };

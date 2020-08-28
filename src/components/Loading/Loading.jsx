@@ -1,12 +1,14 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
+
+import useComponentDidMount from 'hooks/useComponentDidMount';
 
 const Loading = ({ active, children, loader: Loader, disabled }) => {
   const renderedRef = useRef(false);
 
-  useEffect(() => {
+  useComponentDidMount(() => {
     renderedRef.current = true;
-  }, []);
+  });
 
   const renderChildren = useCallback(
     () => (typeof children === 'function' ? children() : children),
