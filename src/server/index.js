@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 global.RUNTIME_ENV = 'server';
 
 const server = require('./server').default;
