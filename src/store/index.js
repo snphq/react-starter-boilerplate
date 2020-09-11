@@ -15,6 +15,7 @@ export default (history, initialState) => {
     ],
     reducer: createRootReducer(history),
     preloadedState: initialState,
+    devTools: process.env.APP_ENV !== 'production',
   });
 
   store.runSaga = sagaMiddleware.run;
