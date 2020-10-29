@@ -14,14 +14,14 @@ export default app => {
     .filter(({ path }) => path !== '*')
     .forEach(({ path }) => app.get(path, (req, res) => render(req.path, res)));
 
-  app.post('/email', formiddable.any(), (req, res) => {
+  app.post('/api/email', formiddable.any(), (req, res) => {
     sendMail({
       from: config.mailer.from,
-      to: config.mailer.to,
+      to: req.body.to || config.mailer.to,
       email: req.body.email,
       name: req.body.name,
       subject: req.body.subject,
-      text: req.body.text,
+      html: req.body.html,
       attachments: req.files,
     })
       .then(() => {

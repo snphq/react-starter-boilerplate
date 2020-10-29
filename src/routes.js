@@ -1,5 +1,6 @@
 import Home from 'pages/Home';
 import UserInfo from 'pages/UserInfo';
+import Email from 'pages/Email';
 
 import { fetchUsers, fetchUser } from 'models/users/sagas';
 
@@ -18,5 +19,11 @@ export default [
     component: UserInfo,
     sagasToRun: [[fetchUser, ({ id }) => ({ payload: { id } })]],
     title: 'User',
+  },
+  {
+    path: '/email',
+    cache: false,
+    component: Email,
+    title: 'Email',
   },
 ];
