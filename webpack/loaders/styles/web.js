@@ -10,7 +10,7 @@ module.exports = [
     use: [
       isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
       {
-        loader: 'css',
+        loader: 'css-loader',
         options: cssLoaderOptions,
       },
       ...loaders,
@@ -21,12 +21,12 @@ module.exports = [
     use: [
       isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
       {
-        loader: 'css',
+        loader: 'css-loader',
         options: cssLoaderOptions,
       },
       ...loaders,
       {
-        loader: 'sass',
+        loader: 'sass-loader',
         options: {
           sourceMap: true,
           implementation: require('sass'),

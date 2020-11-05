@@ -8,5 +8,5 @@ module.exports = {
     context: path.join(process.cwd(), './src'),
     localIdentName: '[name]__[local]--[hash:base64:5]',
   },
-  loaders: [{ loader: 'postcss', options: { sourceMap: true } }],
+  loaders: [{ loader: 'postcss-loader', options: { sourceMap: true } }],
 };

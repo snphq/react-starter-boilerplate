@@ -20,6 +20,9 @@ module.exports = {
     rules: require('./loaders'),
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     new FriendlyErrorsWebpackPlugin(),
     new StyleLintPlugin({ failOnError: false }),
     new MiniCssExtractPlugin({
@@ -37,22 +40,19 @@ module.exports = {
       RUNTIME_ENV: JSON.stringify('client'),
     }),
   ],
-  resolveLoader: {
-    moduleExtensions: ['-loader'],
-  },
   resolve: {
     modules: ['src', 'node_modules'],
     descriptionFiles: ['package.json'],
     extensions: ['.js', '.jsx', '.json'],
     alias: require('./alias'),
+    fallback: {
+      fs: false,
+      vm: false,
+      net: false,
+      tls: false,
+    },
   },
   stats: {
     entrypoints: false,
-  },
-  node: {
-    fs: 'empty',
-    vm: 'empty',
-    net: 'empty',
-    tls: 'empty',
   },
 };

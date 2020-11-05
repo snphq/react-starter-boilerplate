@@ -7,16 +7,15 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 module.exports = merge(require('./common'), {
   mode: 'production',
   devtool: 'hidden-source-map',
-  cache: false,
   optimization: {
     splitChunks: {
       chunks: 'all',
-      name: process.env.APP_ENV !== 'development',
+      name: false,
     },
   },
   entry: path.resolve(process.cwd(), 'src/client'),
   plugins: [
-    new webpack.HashedModuleIdsPlugin(),
+    new webpack.ids.HashedModuleIdsPlugin(),
     new CompressionPlugin({
       filename: '[path].gz[query]',
       algorithm: 'gzip',

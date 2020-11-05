@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const WebpackNotifierPlugin = require('webpack-notifier');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const path = require('path');
 const common = require('./common.js');
 
@@ -12,9 +11,8 @@ module.exports = merge(common, {
     'webpack-hot-middleware/client?overlay=false',
     path.resolve(process.cwd(), 'src/client'),
   ],
-  cache: true,
+  cache: { type: 'filesystem' },
   plugins: [
-    new HardSourceWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackNotifierPlugin({
       excludeWarnings: true,

@@ -17,9 +17,8 @@ export const isCollectionFetchedSelector = createSelector(
   ({ collectionFetched }) => collectionFetched
 );
 
-export const collectionSelector = createSelector(
-  usersSelector,
-  users => denormalize(users.collection)
+export const collectionSelector = createSelector(usersSelector, users =>
+  denormalize(users.collection)
 );
 
 export const itemSelector = createSelector(

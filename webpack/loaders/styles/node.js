@@ -20,7 +20,7 @@ module.exports = [
       },
       ...loaders,
       {
-        loader: 'sass',
+        loader: 'sass-loader',
         options: {
           sourceMap: true,
           implementation: require('sass'),

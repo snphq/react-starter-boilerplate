@@ -6,7 +6,7 @@ import webpackConfig from '../../webpack';
 export default app => {
   const compiler = webpack(webpackConfig);
 
-  compiler.apply(new webpack.ProgressPlugin());
+  new webpack.ProgressPlugin().apply(compiler);
 
   app.use(
     devMiddleware(compiler, {
@@ -21,4 +21,6 @@ export default app => {
       log: false /* Turn it off for friendly-errors-webpack-plugin */,
     })
   );
+
+  compiler.close(() => console.log('compiler.close'));
 };

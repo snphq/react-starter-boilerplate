@@ -40,10 +40,7 @@ const sendAppStream = (res, route, store, cache) => {
     handleRenderError(res, error);
   });
 
-  appContentStream.pipe(
-    res,
-    { end: false }
-  );
+  appContentStream.pipe(res, { end: false });
 
   appContentStream.on('end', () => {
     const htmlEnd = renderHtmlEnd(

@@ -5,20 +5,20 @@ module.exports = [
     enforce: 'pre',
     test: /\.jsx?$/,
     exclude: /node_modules/,
-    loader: 'eslint',
+    loader: 'eslint-loader',
     options: { failOnError: false },
   },
   {
     test: /\.jsx?$/,
     exclude: /node_modules/,
-    loader: 'babel',
+    loader: 'babel-loader',
     options: {
       cacheDirectory: false,
     },
   },
   {
     test: /\.(woff2?|ttf|eot)$/,
-    loader: 'file',
+    loader: 'file-loader',
     options: {
       name: '[name].[hash:8].[ext]',
       emitFile: process.env.TARGET_ENV !== 'node',
@@ -26,7 +26,7 @@ module.exports = [
   },
   {
     test: /\.(gif|png|svg|jpe?g|webp)$/,
-    loader: 'file',
+    loader: 'file-loader',
     options: {
       limit: 10240,
       name: '[name].[hash:8].[ext]',

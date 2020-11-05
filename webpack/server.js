@@ -7,7 +7,6 @@ module.exports = {
   devtool: false,
   entry: [path.resolve(process.cwd(), 'src/server/index.js')],
   context: path.resolve(process.cwd()),
-  cache: false,
   target: 'node',
   output: {
     path: process.cwd(),
@@ -31,12 +30,8 @@ module.exports = {
       filename: '[name].css',
     }),
   ],
-  resolveLoader: {
-    moduleExtensions: ['-loader'],
-  },
   resolve: require('./resolve'),
   node: {
     global: false,
-    process: false,
   },
 };
