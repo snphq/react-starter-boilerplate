@@ -11,9 +11,10 @@ deploy:
   stage: deploy
   script:
     - npm install
-    - npm run dist
+    - npm run build:assets:staging
+    - npm run build:server:staging
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - export PROJECT_NAME=`echo $CI_PROJECT_NAME | awk -F'-' 'sub(FS $NF,x)'`
-    - ansible-playbook ./deploy.yml -i $PROJECT_NAME-direct.snpdev.ru, --extra-vars="project=$PROJECT_NAME" --extra-vars="build_type=static"
+    - ansible-playbook ./deploy.yml -i $PROJECT_NAME-direct.snpdev.ru, --extra-vars="project=$PROJECT_NAME" --extra-vars="build_type=ssr"
   only:
     - testing
