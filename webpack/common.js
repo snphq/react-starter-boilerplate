@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const isDev = process.env.APP_ENV === 'development';
 
@@ -20,6 +21,9 @@ module.exports = {
     rules: require('./loaders'),
   },
   plugins: [
+    new ESLintPlugin({
+      extensions: ['js', 'jsx'],
+    }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
     }),

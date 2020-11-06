@@ -2,13 +2,6 @@ const styles = require('./styles');
 
 module.exports = [
   {
-    enforce: 'pre',
-    test: /\.jsx?$/,
-    exclude: /node_modules/,
-    loader: 'eslint-loader',
-    options: { failOnError: false },
-  },
-  {
     test: /\.jsx?$/,
     exclude: /node_modules/,
     loader: 'babel-loader',
