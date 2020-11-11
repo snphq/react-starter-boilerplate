@@ -45,10 +45,15 @@
       register: lastReleaseName
 
     - name: Remove old symlink
-      command: rm -f /var/www/{{ projectName }}/cs/current
+      shell: |
+        rm -f /var/www/{{ projectName }}/cs/current/.env
+        rm -f /var/www/{{ projectName }}/cs/current
 
     - name: Make symlink for new prod
-      command: ln -s /var/www/{{ projectName }}/cs/releases/{{ansible_date_time.date}}-{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}} /var/www/{{ projectName }}/cs/current
+      shell: |
+        mkdir -p /var/www/{{ projectName }}/cs/shared
+        ln -s /var/www/{{ projectName }}/cs/releases/{{ansible_date_time.date}}-{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}} /var/www/{{ projectName }}/cs/current
+        ln -s /var/www/{{ projectName }}/cs/shared/.env /var/www/{{ projectName }}/cs/releases/{{ansible_date_time.date}}-{{ansible_date_time.hour}}{{ansible_date_time.minute}}{{ansible_date_time.second}}/.env
 
     - name: Kill old application
       shell: pm2 delete -s {{ projectName }}
