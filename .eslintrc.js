@@ -54,7 +54,7 @@ module.exports = {
 
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
-    'func-names': ["error", "never"],
+    'func-names': ['error', 'never'],
   },
   globals: {
     RUNTIME_ENV: true,
