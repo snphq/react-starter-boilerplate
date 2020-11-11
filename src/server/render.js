@@ -15,10 +15,7 @@ import routes from '../routes';
 import configureStore from '../store';
 import matchRoutes from 'utils/matchRoutes';
 import * as render from '../utils/renderRootComponent';
-
-/* eslint-disable impot/extensions */
 import assets from '../../public/webpack-assets.json';
-/* eslint-disable import/extensions */
 
 const isDev = process.env.APP_ENV === 'development';
 
