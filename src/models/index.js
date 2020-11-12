@@ -10,6 +10,6 @@ export const createRootReducer = history => ({
   users: usersReducer,
 });
 
-export const rootSaga = function* rootSaga() {
+export const rootSaga = function*() {
   yield all([usersSagas()]);
 };
