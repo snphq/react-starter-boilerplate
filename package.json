@@ -210,7 +210,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-react-hooks": "^2.2.0",
-    "eslint-webpack-plugin": "^2.2.0",
+    "eslint-webpack-plugin": "^2.4.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^8.1.0",
