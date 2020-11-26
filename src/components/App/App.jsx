@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import config from 'config';
 
 import AppRouter from 'components/AppRouter';
+import RotateScreen from 'components/RotateScreen';
 import 'styles/normalize.scss';
 import logo from 'images/logo.svg';
 import styles from './App.scss';
@@ -18,16 +19,19 @@ const App = ({ routes }) => {
   }
 
   return (
-    <div className={styles.app}>
-      {/* Use Helmet only in SPA mode. Render app head on server side  */}
-      {/* <Helmet {...config.app} /> */}
-      <div className={styles.header}>
-        <img src={logo} alt="logo" role="presentation" />
-        <h1>{config.app.title}</h1>
+    <>
+      <RotateScreen />
+      <div className={styles.app}>
+        {/* Use Helmet only in SPA mode. Render app head on server side  */}
+        {/* <Helmet {...config.app} /> */}
+        <div className={styles.header}>
+          <img src={logo} alt="logo" role="presentation" />
+          <h1>{config.app.title}</h1>
+        </div>
+        <hr />
+        <AppRouter routes={routes} />
       </div>
-      <hr />
-      <AppRouter routes={routes} />
-    </div>
+    </>
   );
 };
 

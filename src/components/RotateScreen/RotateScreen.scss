@@ -1,0 +1,30 @@
+.root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    height: 80px;
+    transform: rotate(90deg);
+  }
+
+  h1 {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+}
