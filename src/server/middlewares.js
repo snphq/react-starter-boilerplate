@@ -12,5 +12,9 @@ export default app => {
   app.use(compression());
   app.use(bodyParser.json());
   app.use(favicon(path.resolve(process.cwd(), 'public/favicon.ico')));
-  app.use(express.static(path.resolve(process.cwd(), 'public')));
+  app.use(
+    express.static(path.resolve(process.cwd(), 'public'), {
+      maxAge: '31536000000',
+    })
+  );
 };
