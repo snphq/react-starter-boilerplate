@@ -10,11 +10,27 @@ before_script:
 deploy:
   stage: deploy
   script:
-    - npm install
+    - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    - . ~/.nvm/nvm.sh
+    - nvm install
+    - npm i yarn
+    - yarn
     - npm run build:assets:staging
     - npm run build:server:staging
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - export PROJECT_NAME=`echo $CI_PROJECT_NAME | awk -F'-' 'sub(FS $NF,x)'`
-    - ansible-playbook ./deploy.yml -i $PROJECT_NAME-direct.snpdev.ru, --extra-vars="project=$PROJECT_NAME" --extra-vars="build_type=ssr"
+    - ansible-playbook ./deploy.yml -i frontend-only-v2.snpdev.ru, --extra-vars="project=$PROJECT_NAME" --extra-vars="build_type=ssr" --extra-vars="app_env=staging"
   only:
     - testing
+
+deploy_production:
+  stage: deploy
+  script:
+    - yarn
+    - npm run build:assets:production
+    - npm run build:server:production
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - export PROJECT_NAME=`echo $CI_PROJECT_NAME | awk -F'-' 'sub(FS $NF,x)'`
+    - ansible-playbook ./production_deploy.yml -i 3.134.102.138, --extra-vars="project=$PROJECT_NAME" --extra-vars="build_type=ssr" --extra-vars="app_env=production"
+  only:
+    - /^release/[0-9]+/
