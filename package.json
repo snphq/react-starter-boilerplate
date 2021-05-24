@@ -237,7 +237,7 @@
     "webpack-hot-middleware": "^2.22.1",
     "webpack-manifest-plugin": "3.0.0-rc.0",
     "webpack-merge": "^4.2.1",
-    "webpack-notifier": "^1.8.0"
+    "webpack-notifier": "^1.13.0"
   },
   "resolutions": {
     "webpack-sources": "^2.1.1",
