@@ -20,3 +20,12 @@ export const fetchUser = id => {
 
   return Promise.reject(new Error('Not found'));
 };
+
+export const fetchUsersIds = () => {
+  const usersIds = users.map(user => user.id);
+
+  return Req.GET({
+    url: `/users_ids`,
+    stubData: usersIds,
+  });
+};

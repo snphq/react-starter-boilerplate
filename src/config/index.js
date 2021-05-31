@@ -9,6 +9,7 @@ const configs = {
 export default {
   port: process.env.PORT,
   defaultLocale: 'en',
+  remoteApiUrl: 'https://github.com/snphq/react-starter-boilerplate',
   htmlMinifier: {
     collapseWhitespace: true,
     removeComments: true,
@@ -43,5 +44,11 @@ export default {
       },
     ],
   },
+  robots: [
+    {
+      userAgent: '*',
+      disallow: '/',
+    },
+  ],
   ...configs[process.env.APP_ENV],
 };
