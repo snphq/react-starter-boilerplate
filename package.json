@@ -151,7 +151,7 @@
   "dependencies": {
     "@babel/register": "^7.0.0",
     "@react-hook/window-size": "^3.0.7",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "bowser": "^2.1.2",
