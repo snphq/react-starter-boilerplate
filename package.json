@@ -51,6 +51,7 @@
     "render:index": "node ./tools/scripts/render-index.js",
     "dev:manifest": "node ./tools/scripts/dev-manifest.js",
     "gen:robots": "node ./tools/scripts/gen-robots.js",
+    "gen:sitemap": "node ./tools/scripts/gen-sitemap",
     "cron:sitemap": "node ./tools/cron-tasks/sitemap"
   },
   "betterScripts": {
