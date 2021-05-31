@@ -4,6 +4,8 @@ import Email from 'pages/Email';
 
 import { fetchUsers, fetchUser } from 'models/users/sagas';
 
+import { fetchUsersIds } from 'api/users';
+
 export default [
   {
     path: '/',
@@ -12,6 +14,7 @@ export default [
     component: Home,
     sagasToRun: [fetchUsers],
     title: 'Home',
+    sitemap: true,
   },
   {
     path: '/users/:id',
@@ -19,11 +22,14 @@ export default [
     component: UserInfo,
     sagasToRun: [[fetchUser, ({ id }) => ({ payload: { id } })]],
     title: 'User',
+    sitemap: () =>
+      fetchUsersIds().then(({ data }) => data.map(id => `/users/${id}`)),
   },
   {
     path: '/email',
     cache: false,
     component: Email,
     title: 'Email',
+    sitemap: false,
   },
 ];

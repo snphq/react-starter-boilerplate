@@ -49,7 +49,9 @@
     "clean:build": "rimraf ./public/*",
     "copy:public": "node ./tools/scripts/copy-to-public.js",
     "render:index": "node ./tools/scripts/render-index.js",
-    "dev:manifest": "node ./tools/scripts/dev-manifest.js"
+    "dev:manifest": "node ./tools/scripts/dev-manifest.js",
+    "gen:robots": "node ./tools/scripts/gen-robots.js",
+    "cron:sitemap": "node ./tools/cron-tasks/sitemap"
   },
   "betterScripts": {
     "dev": {
@@ -150,6 +152,7 @@
     "@babel/register": "^7.0.0",
     "@react-hook/window-size": "^3.0.7",
     "axios": "^0.18.0",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "bowser": "^2.1.2",
     "chalk": "^2.4.1",
@@ -157,6 +160,7 @@
     "connected-react-router": "^6.3.1",
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
+    "generate-robotstxt": "^8.0.3",
     "helmet": "^3.12.0",
     "history": "^4.9.0",
     "hpp": "^0.2.2",
@@ -166,6 +170,7 @@
     "memory-cache": "^0.2.0",
     "morgan": "^1.9.0",
     "multer": "^1.4.2",
+    "node-cron": "^3.0.0",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
@@ -181,6 +186,7 @@
     "sass": "^1.23.3",
     "serialize-javascript": "^1.5.0",
     "serve-favicon": "^2.5.0",
+    "sitemap": "^7.0.0",
     "webpack-bundle-analyzer": "^3.6.1"
   },
   "devDependencies": {
