@@ -79,27 +79,8 @@
 
       register: run_result
 
-    # Archive old release version and save state    
-    - archive:
-        path: /var/www/{{ projectName }}/cs/releases/{{ lastReleaseName.stdout }}
-        dest: /var/www/{{ projectName }}/cs/releases/{{ lastReleaseName.stdout }}.tar.gz 
-      register: tarballCreatingState
-
     - name: Clean old release path
       file:
         state: absent
         path: "/var/www/{{ projectName }}/cs/releases/{{ lastReleaseName.stdout }}"
       register: deleteResult
-      when: tarballCreatingState.failed == false
-
-    - name: Get count of exist backups
-      shell: ls /var/www/{{ projectName }}/cs/releases/*.tar.gz | wc -l
-      register: existBackupsCount
-
-    - name: Calculate count of backups to delete
-      shell: ls -trd -1 /var/www/{{ projectName }}/cs/releases/*.tar.gz | head -{{ backupCountForRemove }} | xargs rm
-      vars:
-        backupCountForRemove: "{{ existBackupsCount.stdout|int - 3 }}"
-      register: backupsForDelete
-      when: existBackupsCount.stdout|int > 3
-
