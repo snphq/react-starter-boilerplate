@@ -160,7 +160,7 @@
     "compression": "^1.7.2",
     "connected-react-router": "^6.3.1",
     "dotenv": "^8.2.0",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "generate-robotstxt": "^8.0.3",
     "helmet": "^3.12.0",
     "history": "^4.9.0",
